@@ -29,9 +29,7 @@ class UserModel extends Connection {
   public function createUser($first_name, $last_name, $email) {
     $sql = "INSERT INTO users (first_name, last_name, email, created_at, updated_at) VALUES (:first_name, :last_name, :email, :created_at, :updated_at)";
     $stmt = $this->conexion->prepare($sql);
-    // $stmt->bindParam(":nombre", $nombre, PDO::PARAM_STR);
-    // $stmt->bindParam(":correo", $correo, PDO::PARAM_STR);
-    // $stmt->bindParam(":contrasena", $contrasena, PDO::PARAM_STR);
+
     $data = array(
       ':first_name' => $first_name,
       ':last_name' => $last_name,

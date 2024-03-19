@@ -8,7 +8,6 @@
     '/users/edit/(?<id>\d+)' => 'UsersController@edit',
     '/users/delete/(?<id>\d+)' => 'UsersController@delete',
     '/users/update/(?<id>\d+)' => 'UsersController@update',
-    // '/products/search' => 'ProductsController@search',
     # Messages
     '/messages' => 'MessagesController@index',
     '/messages/create' => 'MessagesController@create',

@@ -34,9 +34,6 @@ class MessageModel extends Connection
   {
     $sql = "INSERT INTO messages (title, message, user_id, created_at, updated_at) VALUES (:title, :message, :user_id, :created_at, :updated_at)";
 
-    // $stmt->bindParam(":nombre", $nombre, PDO::PARAM_STR);
-    // $stmt->bindParam(":correo", $correo, PDO::PARAM_STR);
-    // $stmt->bindParam(":contrasena", $contrasena, PDO::PARAM_STR);
     $stmt = $this->conexion->prepare($sql);
     $data = array(
       ':title' => $title,
