@@ -1,6 +1,7 @@
 <?php
   $routes = [
     '/' => 'HomeController@index',
+    # Users routes
     '/users' => 'UsersController@index',
     '/users/create' => 'UsersController@create',
     '/users/new' => 'UsersController@new',
@@ -8,7 +9,7 @@
     '/users/edit/(?<id>\d+)' => 'UsersController@edit',
     '/users/delete/(?<id>\d+)' => 'UsersController@delete',
     '/users/update/(?<id>\d+)' => 'UsersController@update',
-    # Messages
+    # Messages routes
     '/messages' => 'MessagesController@index',
     '/messages/create' => 'MessagesController@create',
     '/messages/new' => 'MessagesController@new',

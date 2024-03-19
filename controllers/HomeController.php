@@ -1,14 +1,11 @@
 <?php
-require_once './models/User.php';
+require_once 'BaseController.php';
 
-class HomeController  extends UserModel {
-  public $mivar;
-  public function __construct() {
-    $this->mivar = '3';
-  }
+class HomeController extends BaseController {
+  public function __construct() {}
 
   public function index() {
-    include_once 'views/home/index.php';
+    $this->renderView('home/index', []);
   }
 }
-?>
+

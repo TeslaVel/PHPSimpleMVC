@@ -11,7 +11,7 @@ ob_start();
       New Message
     </a>
   </div>
-  <table class="table table-stripped mt-3">
+  <table class="table table-stripped mt-3"  width="100%">
    <thead>
       <th>Title</th>
       <th>Comment</th>
@@ -42,6 +42,4 @@ ob_start();
 
 <?php
   $content = ob_get_clean();
-
-  include_once "./layout.php";
 ?>

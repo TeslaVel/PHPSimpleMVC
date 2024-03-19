@@ -7,15 +7,17 @@ ob_start();
     <input type="hidden" name="action" value="create">
     <div class="form-group">
       <label for="title">Título:</label>
-      <input type="text" name="title" id="title" class="form-control" required>
+      <input type="text" name="message[title]" id="title" class="form-control" required>
+      <input type="text" name="message[algo]" id="title" class="form-control" value="" required>
+
     </div>
     <div class="form-group">
       <label for="message">Mensaje:</label>
-      <textarea name="message" id="message" class="form-control" required></textarea>
+      <textarea name="message[message]" id="message" class="form-control" required></textarea>
     </div>
     <div class="form-group">
       <label for="user_id">ID del Usuario:</label>
-      <select name="user_id" id="user_id" class="form-control" required>
+      <select name="message[user_id]" id="user_id" class="form-control" required>
         <?php foreach ($users  as $user) {
           echo '<option value="' . $user['id'] . '">';
           echo $user['email'];
@@ -35,6 +37,4 @@ ob_start();
 
 <?php
 $content = ob_get_clean();
-
-include_once "./layout.php";
 ?>

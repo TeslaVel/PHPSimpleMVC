@@ -1,8 +1,7 @@
 <?php
-class Redirect {
-  public static function redirectTo($baseUrl) {
+trait Redirect {
+  public function redirectTo($baseUrl) {
     header("Location:  $baseUrl");
     exit;
   }
 }
-?>

@@ -1,94 +1,90 @@
 <?php
+require_once 'BaseController.php';
+
 require_once './models/Message.php';
 require_once './models/User.php';
-
-require_once './views/helpers/RenderView.php';
 require_once './views/helpers/Redirect.php';
 
-class MessagesController extends MessageModel {
+class MessagesController extends BaseController {
+  use Redirect;
+  // private $messageModel;
+  public $indexUrl;
+  private $messageModel;
 
-    public $indexUrl;
+  public function __construct() {
+    parent::__construct();
+    $this->messageModel = new MessageModel();
+    $this->indexUrl = '/'.Config::getAppPath().'/messages';
+  }
 
-    public function __construct() {
-      parent::__construct();
-      $this->indexUrl = '/'.Config::getAppPath().'/messages';
+  public function index() {
+    // Mostrar la lista de usuarios
+    $messages = $this->messageModel->getAllMessages();
+    $this->renderView('messages/index', ['messages' => $messages]);
+  }
+
+  public function show($id) {
+    // Mostrar un usuario específico
+    $message = $this->messageModel->findById($id);
+
+    if ( empty($message)) $this->redirectTo($this->indexUrl);
+
+    $this->renderView('messages/show', ['message' => $message]);
+  }
+
+  public function new() {
+    $userModel = new UserModel();
+    $users = $userModel->getAllUsers();
+
+    $this->renderView('messages/new', ['users' => $users]);
+  }
+
+  public function create() {
+    $data = $_POST['message'];
+    $userModel = new UserModel();
+    $user = $userModel->findById($data['user_id']);
+
+    if ( empty($user)) {
+      $url = '/'.Config::getAppPath().'/messages';
+      header("Location: $url");
+      exit;
     }
 
-    public function index() {
-      // Mostrar la lista de usuarios
-      $messages = $this->getAllMessages();
-      RenderView::render('messages/index', ['messages' => $messages]);
+    $id = $this->messageModel->createMessage($data);
+
+    $this->redirectTo($this->indexUrl);
+  }
+
+  public function edit($id) {
+    $message = $this->messageModel->findById($id);
+    $userModel = new UserModel();
+    $users = $userModel->getAllUsers();
+
+    if ( empty($message)) {
+      return $this->redirectTo($this->indexUrl);
     }
 
-    public function show($id) {
-      // Mostrar un usuario específico
-      $message = $this->getMessageById($id);
+    $message = $this->messageModel->findById($id);
+    $this->renderView('messages/edit', ['message' => $message, 'users' => $users]);
+  }
 
-      if ( empty($message)) Redirect::redirectTo($this->indexUrl);
+  public function update($id) {
+    $message = $this->messageModel->findById($id);
 
-      RenderView::render('messages/show', ['message' => $message]);
+    if (empty($message)) {
+      return $this->redirectTo($this->indexUrl);
     }
 
-    public function new() {
-      $userModel = new UserModel();
-      $users = $userModel->getAllUsers();
+    $data = $_POST['message'];
 
-      RenderView::render('messages/new', ['users' => $users]);
-    }
+    $affected = $this->messageModel->updateMessage($id, $data);
 
-    public function create() {
-      $title = isset($_POST['title']) ? $_POST['title'] : null; // Evitar errores si no existe el campo
-      $message_content = isset($_POST['message']) ? $_POST['message'] : null;
-      $user_id = isset($_POST['user_id']) ? $_POST['user_id'] : null;
+    return $this->redirectTo("$this->indexUrl/$id");
+  }
 
-      // $user = $this->getMessageById($id);
+  public function delete($id) {
+    $affected = $this->messageModel->deleteMessage($id);
 
-      // if ( empty($user)) {
-      //   $url = '/'.Config::getAppPath().'/messages';
-      //   header("Location: $url");
-      //   exit;
-      // }
-
-      $id = $this->createMessage($title, $message_content, $user_id);
-
-      Redirect::redirectTo($this->indexUrl);
-    }
-
-    public function edit($id) {
-      $message = $this->getMessageById($id);
-      $userModel = new UserModel();
-      $users = $userModel->getAllUsers();
-
-      if ( empty($message)) {
-        return Redirect::redirectTo($this->indexUrl);
-      }
-
-      $message = $this->getMessageById($id);
-      RenderView::render('messages/edit', ['message' => $message]);
-    }
-
-    public function update($id) {
-      // Actualizar un usuario
-
-      $message = $this->getMessageById($id);
-
-      if ( empty($message)) {
-        return Redirect::redirectTo($this->indexUrl);
-      }
-
-      $title = isset($_POST['title']) ? $_POST['title'] : null;
-      $message_content = isset($_POST['message']) ? $_POST['message'] : null;
-      $user_id = isset($_POST['user_id']) ? $_POST['user_id'] : null;
-
-      $affected = $this->updateMessage($id, $title, $message_content, $user_id);
-
-      return Redirect::redirectTo("$this->indexUrl/$id");
-    }
-
-    public function delete($id) {
-      $affected = $this->deleteMessage($id);
-
-      return Redirect::redirectTo($this->indexUrl);
-    }
+    return $this->redirectTo($this->indexUrl);
+  }
 }
-?>

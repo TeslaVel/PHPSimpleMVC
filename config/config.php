@@ -22,5 +22,3 @@ class Config {
       return str_replace('/'.self::getAppPath(), "", $url);
     }
   }
-
-?>
