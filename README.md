@@ -1,0 +1,1 @@
+### Simple PHP project where the MVC pattern is used.
