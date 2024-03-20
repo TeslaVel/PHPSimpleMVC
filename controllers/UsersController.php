@@ -45,6 +45,13 @@ class UsersController extends BaseController {
 
     $id = $this->userModel->createUser($first_name, $last_name, $email);
 
+    if ($id > 0) {
+      Flashify::create([
+        'type' => 'danger',
+        'message' => 'User was created',
+      ]);
+    }
+
     $this->redirectTo($this->indexUrl);
   }
 
@@ -63,12 +70,26 @@ class UsersController extends BaseController {
 
     $affected = $this->userModel->updateUser($id, $first_name, $last_name, $email);
 
+    if ($affected > 0) {
+      Flashify::create([
+        'type' => 'success',
+        'message' => 'User was updated',
+      ]);
+    }
+
     $this->redirectTo("$this->indexUrl/$id");
   }
 
   # POST users/delete/:id
   public function delete($id) {
     $affected = $this->userModel->deleteUser($id);
+
+    if ($affected > 0) {
+      Flashify::create([
+        'type' => 'danger',
+        'message' => 'User was deleted',
+      ]);
+    }
 
     $this->redirectTo($this->indexUrl);
   }

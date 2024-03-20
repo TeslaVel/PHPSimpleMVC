@@ -52,6 +52,14 @@ class MessagesController extends BaseController {
 
     $id = $this->messageModel->createMessage($data);
 
+    if ($id > 0) {
+      Flashify::create([
+        'type' => 'success',
+        'message' => 'Message was create',
+      ]);
+    }
+
+
     $this->redirectTo($this->indexUrl);
   }
 
@@ -79,11 +87,25 @@ class MessagesController extends BaseController {
 
     $affected = $this->messageModel->updateMessage($id, $data);
 
+    if ($affected > 0) {
+      Flashify::create([
+        'type' => 'success',
+        'message' => 'Message was updated',
+      ]);
+    }
+
     return $this->redirectTo("$this->indexUrl/$id");
   }
 
   public function delete($id) {
     $affected = $this->messageModel->deleteMessage($id);
+
+    if ($affected > 0) {
+      Flashify::create([
+        'type' => 'danger',
+        'message' => 'Message was deleted',
+      ]);
+    }
 
     return $this->redirectTo($this->indexUrl);
   }

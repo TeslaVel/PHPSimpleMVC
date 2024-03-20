@@ -5,6 +5,7 @@ error_reporting(E_ALL);
 
 require_once 'config/config.php';
 require_once 'config/routes.php';
+require_once 'helpers/Flashify.php';
 
 $uri = $_SERVER['REQUEST_URI'];
 $found = false;

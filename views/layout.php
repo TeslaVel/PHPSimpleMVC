@@ -10,6 +10,7 @@
   </head>
 </head>
 <body>
+  <?php  require_once "notifications.php"; ?>
   <?php  require_once "menu.php"; ?>
 
   <main class="container-fluid">
