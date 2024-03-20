@@ -5,7 +5,7 @@ class UserModel extends BaseModel {
   public static $name = 'users';
 
   public static $fillableFields = [
-    'first_name', 'last_name', 'created_at', 'updated_at', 'email'
+    'first_name', 'last_name', 'created_at', 'updated_at', 'email', 'password'
   ];
 
   public function getAllUsers() {
@@ -16,28 +16,29 @@ class UserModel extends BaseModel {
     return $this->find($id);
   }
 
-  public function createUser($first_name, $last_name, $email) {
-    $data = array(
-      'first_name' => $first_name,
-      'last_name' => $last_name,
-      'email' => $email,
-      'created_at' =>time(),
-      'updated_at' =>time()
-    );
+  public function createUser($data) {
+    // $data = array(
+    //   'first_name' => $first_name,
+    //   'last_name' => $last_name,
+    //   'email' => $email,
+    //   'created_at' =>time(),
+    //   'updated_at' =>time()
+    // );
 
     try {
       return $this->save($data);
     } catch(PDOException $e) {
       echo "Error de conexión: " . $e->getMessage();
+      exit;
     }
   }
 
-  public function updateUser($id, $first_name, $last_name, $email) {
-    $data = array(
-      'first_name' => $first_name,
-      'last_name' => $last_name,
-      'updated_at' => time(),
-    );
+  public function updateUser($id, $data) {
+    // $data = array(
+    //   'first_name' => $first_name,
+    //   'last_name' => $last_name,
+    //   'updated_at' => time(),
+    // );
 
     try {
       return $this->update($id, $data);

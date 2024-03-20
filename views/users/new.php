@@ -7,16 +7,16 @@ ob_start();
     <input type="hidden" name="action" value="create">
     <div class="form-group">
       <label for="first_name">First Name:</label>
-      <input type="text" name="first_name" id="first_name" class="form-control" required>
+      <input type="text" name="user[first_name]" id="first_name" class="form-control" required>
     </div>
     <div class="form-group">
       <label for="last_name">Last Name:</label>
-      <input type="text" name="last_name" id="last_name" class="form-control" required>
+      <input type="text" name="user[last_name]" id="last_name" class="form-control" required>
     </div>
-    <div class="form-group">
+    <!-- <div class="form-group">
       <label for="email">Email:</label>
-      <input type="email" name="email" id="email" class="form-control" required>
-    </div>
+      <input type="email" name="user[email]" id="email" class="form-control" required>
+    </div> -->
     <div class="text-center">
       <button type="submit" class="btn btn-primary">Create User</button>
       <a class="btn btn-danger"

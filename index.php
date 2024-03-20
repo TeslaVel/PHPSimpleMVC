@@ -4,8 +4,6 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 require_once 'config/config.php';
-require_once 'config/routes.php';
-require_once 'helpers/Flashify.php';
 
 $uri = $_SERVER['REQUEST_URI'];
 $found = false;
@@ -40,11 +38,11 @@ foreach ($routes as $route => $controllerAction) {
       $found = true;
       break;
     } else {
-      echo "Controller file not found: $fisicalDir";
+      echo "<br>Controller file not found: $fisicalDir";
     }
   }
 }
 
 if (!$found) {
-  echo "Invalid route";
+  echo "<br>Invalid route";
 }

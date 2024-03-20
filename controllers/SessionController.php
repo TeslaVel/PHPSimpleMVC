@@ -1,0 +1,111 @@
+<?php
+require_once 'BaseController.php';
+
+class SessionController extends BaseController {
+  private $userModel;
+  public $indexUrl;
+  public function __construct() {
+    parent::__construct();
+    $this->userModel = new UserModel();
+    $this->indexUrl = '/'.Config::getAppPath().'/';
+  }
+
+  public function signin() {
+
+    if (Session::check('userSession') ) {
+      Flashify::create([
+        'type' => 'info',
+        'message' => 'User is already logged',
+      ]);
+      Redirect::to($this->indexUrl);
+      exit;
+    }
+
+    Render::view('session/signin', []);
+  }
+
+  public function create() {
+    $data = $_POST['session'];
+
+    $user = $this->userModel->findBy('email', $data['email'])[0];
+
+    $exception = null;
+
+    if (!$user) {
+      $exception = "User not found";
+    }
+
+    if (!password_verify($data['password'], $user["password"])) {
+      $exception = "Invalid Password";
+    }
+
+    if ($exception != null) {
+      Flashify::create([
+        'type' => 'danger',
+        'message' => $exception,
+      ]);
+
+      return  Redirect::to($this->indexUrl);
+    }
+
+    Session::create('userSession', ['user_id' => $user['id']]);
+
+    Redirect::to($this->indexUrl);
+  }
+
+  public function signup() {
+    Render::view('session/signup', []);
+  }
+
+  public function register() {
+    $data = $_POST['session'];
+
+    $exception = null;
+
+    if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+      $exception = "Correo electrónico no válido";
+    }
+
+    if (strlen($data['password']) < 7) {
+      $exception = "La contraseña debe tener al menos 8 caracteres";
+    }
+
+    if ($exception != null) {
+      Flashify::create([
+        'type' => 'danger',
+        'message' => $exception,
+      ]);
+
+      return  Redirect::to($this->indexUrl);
+    }
+
+    $encrypted = password_hash($data['password'], PASSWORD_BCRYPT);
+
+    $newData = [
+      ...$_POST['session'],
+      'password' =>  $encrypted
+    ];
+
+    $id = $this->userModel->createUser($newData);
+
+    if ($id > 0) {
+      Flashify::create([
+        'type' => 'success',
+        'message' => 'User was created',
+      ]);
+    } else {
+      Flashify::create([
+        'type' => 'danger',
+        'message' => 'User cannot be created',
+      ]);
+    }
+
+    Redirect::to($this->indexUrl);
+  }
+
+  public function destroy() {
+    Session::destroy('userSession');
+    Redirect::to($this->indexUrl);
+  }
+}
+

@@ -1,4 +1,9 @@
 <?php
+
+require_once 'config/routes.php';
+require_once "helpers/Sessionize.php";
+require_once 'helpers/Flashify.php';
+
 class Config {
   public static function getRootPath() {
     $root = dirname(__FILE__);

@@ -1,6 +1,6 @@
 <?php
 trait Redirect {
-  public function redirectTo($baseUrl) {
+  public static function to($baseUrl) {
     header("Location:  $baseUrl");
     exit;
   }

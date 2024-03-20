@@ -1,12 +1,7 @@
 <?php
 require_once 'BaseController.php';
 
-require_once './models/Message.php';
-require_once './models/User.php';
-require_once './views/helpers/Redirect.php';
-
 class MessagesController extends BaseController {
-  use Redirect;
   // private $messageModel;
   public $indexUrl;
   private $messageModel;
@@ -19,24 +14,24 @@ class MessagesController extends BaseController {
 
   public function index() {
     // Mostrar la lista de usuarios
-    $messages = $this->messageModel->getAllMessages();
-    $this->renderView('messages/index', ['messages' => $messages]);
+    $messages = $this->messageModel->findAll();
+    Render::view('messages/index', compact('messages'));
   }
 
   public function show($id) {
     // Mostrar un usuario específico
     $message = $this->messageModel->findById($id);
 
-    if ( empty($message)) $this->redirectTo($this->indexUrl);
+    if ( empty($message)) return Redirect::to($this->indexUrl);
 
-    $this->renderView('messages/show', ['message' => $message]);
+    Render::view('messages/show', ['message' => $message]);
   }
 
   public function new() {
     $userModel = new UserModel();
     $users = $userModel->getAllUsers();
 
-    $this->renderView('messages/new', ['users' => $users]);
+    Render::view('messages/new', ['users' => $users]);
   }
 
   public function create() {
@@ -44,11 +39,7 @@ class MessagesController extends BaseController {
     $userModel = new UserModel();
     $user = $userModel->findById($data['user_id']);
 
-    if ( empty($user)) {
-      $url = '/'.Config::getAppPath().'/messages';
-      header("Location: $url");
-      exit;
-    }
+    if ( empty($user)) return Redirect::to($this->indexUrl);
 
     $id = $this->messageModel->createMessage($data);
 
@@ -60,7 +51,7 @@ class MessagesController extends BaseController {
     }
 
 
-    $this->redirectTo($this->indexUrl);
+    Redirect::to($this->indexUrl);
   }
 
   public function edit($id) {
@@ -68,20 +59,16 @@ class MessagesController extends BaseController {
     $userModel = new UserModel();
     $users = $userModel->getAllUsers();
 
-    if ( empty($message)) {
-      return $this->redirectTo($this->indexUrl);
-    }
+    if ( empty($message)) return Redirect::to($this->indexUrl);
 
     $message = $this->messageModel->findById($id);
-    $this->renderView('messages/edit', ['message' => $message, 'users' => $users]);
+    Render::view('messages/edit', ['message' => $message, 'users' => $users]);
   }
 
   public function update($id) {
     $message = $this->messageModel->findById($id);
 
-    if (empty($message)) {
-      return $this->redirectTo($this->indexUrl);
-    }
+    if (empty($message)) return Redirect::to($this->indexUrl);
 
     $data = $_POST['message'];
 
@@ -94,7 +81,7 @@ class MessagesController extends BaseController {
       ]);
     }
 
-    return $this->redirectTo("$this->indexUrl/$id");
+    return Redirect::to("$this->indexUrl/$id");
   }
 
   public function delete($id) {
@@ -107,6 +94,6 @@ class MessagesController extends BaseController {
       ]);
     }
 
-    return $this->redirectTo($this->indexUrl);
+    return Redirect::to($this->indexUrl);
   }
 }

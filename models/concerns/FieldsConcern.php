@@ -13,12 +13,17 @@ trait FieldsConcern {
     if(array_is_list($data)) {
       $dataArray = array_combine(array_values($data), array_keys($data));
     }
-  
+
+    # Check for empty "password" key and remove it from $allowed
+    if (isset($dataArray['password']) && $dataArray['password'] === '') {
+      unset($allowed[array_search('password', $allowed)]);
+    }
+
     # This function is to filter and leave only the allowed fields
     $filteredData = array_filter($dataArray, function ($key) use ($allowed) {
       return in_array($key, $allowed);
     }, ARRAY_FILTER_USE_KEY);
-   
+
     return $filteredData;
   }
 

@@ -5,7 +5,7 @@ class HomeController extends BaseController {
   public function __construct() {}
 
   public function index() {
-    $this->renderView('home/index', []);
+    Render::view('home/index', []);
   }
 }
 
