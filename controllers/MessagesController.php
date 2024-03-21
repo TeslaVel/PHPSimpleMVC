@@ -2,46 +2,49 @@
 require_once 'BaseController.php';
 
 class MessagesController extends BaseController {
-  // private $messageModel;
   public $indexUrl;
   private $messageModel;
+  private $logger;
 
-  public function __construct() {
+  public function __construct(Logger $logger) {
     parent::__construct();
-    $this->messageModel = new MessageModel();
-    $this->indexUrl = '/'.Config::getAppPath().'/messages';
+    $this->logger = $logger;
+    $this->messageModel = new Message();
+    $this->indexUrl = '/'.Config::getAppPath().'/posts';
   }
 
   public function index() {
-    // Mostrar la lista de usuarios
+    $this->logger->log('Enter to Index Messages');
     $messages = $this->messageModel->findAll();
     Render::view('messages/index', compact('messages'));
   }
 
   public function show($id) {
-    // Mostrar un usuario específico
-    $message = $this->messageModel->findById($id);
+    $message = $this->messageModel->find($id);
 
     if ( empty($message)) return Redirect::to($this->indexUrl);
 
-    Render::view('messages/show', ['message' => $message]);
+    Render::view('messages/show', compact('message'));
   }
 
   public function new() {
-    $userModel = new UserModel();
-    $users = $userModel->getAllUsers();
+    $userModel = new User();
+    $users = $userModel->findAll();
 
-    Render::view('messages/new', ['users' => $users]);
+    Render::view('messages/new', compact('users'));
   }
 
   public function create() {
     $data = $_POST['message'];
-    $userModel = new UserModel();
-    $user = $userModel->findById($data['user_id']);
+    $userModel = new User();
+    $user_id = Auth::user()['id'];
 
-    if ( empty($user)) return Redirect::to($this->indexUrl);
+    if ( !Auth::check() ) return Redirect::to($this->indexUrl);
 
-    $id = $this->messageModel->createMessage($data);
+    $id = $this->messageModel->save([
+      ...$data,
+      'user_id' => $user_id
+    ]);
 
     if ($id > 0) {
       Flashify::create([
@@ -50,29 +53,28 @@ class MessagesController extends BaseController {
       ]);
     }
 
-
-    Redirect::to($this->indexUrl);
+    Redirect::to($this->indexUrl.'/'.$data['post_id']);
   }
 
   public function edit($id) {
-    $message = $this->messageModel->findById($id);
-    $userModel = new UserModel();
-    $users = $userModel->getAllUsers();
+    $message = $this->messageModel->find($id);
+    $userModel = new User();
+    $users = $userModel->findAll();
 
     if ( empty($message)) return Redirect::to($this->indexUrl);
 
-    $message = $this->messageModel->findById($id);
-    Render::view('messages/edit', ['message' => $message, 'users' => $users]);
+    $message = $this->messageModel->find($id);
+    Render::view('messages/edit', compact('message', 'users'));
   }
 
   public function update($id) {
-    $message = $this->messageModel->findById($id);
+    $message = $this->messageModel->find($id);
 
     if (empty($message)) return Redirect::to($this->indexUrl);
 
     $data = $_POST['message'];
 
-    $affected = $this->messageModel->updateMessage($id, $data);
+    $affected = $this->messageModel->update($id, $data);
 
     if ($affected > 0) {
       Flashify::create([
@@ -81,11 +83,12 @@ class MessagesController extends BaseController {
       ]);
     }
 
-    return Redirect::to("$this->indexUrl/$id");
+    return Redirect::to('/'.Config::getAppPath().'/messages/'.$id);
   }
 
   public function delete($id) {
-    $affected = $this->messageModel->deleteMessage($id);
+    $affected = $this->messageModel->delete($id);
+    $post_id = $_POST['post_id'];
 
     if ($affected > 0) {
       Flashify::create([
@@ -94,6 +97,6 @@ class MessagesController extends BaseController {
       ]);
     }
 
-    return Redirect::to($this->indexUrl);
+    return Redirect::to($this->indexUrl.'/'.$post_id);
   }
 }

@@ -1,5 +1,4 @@
 <?php
-require_once "./db/connection.php";
 require_once "concerns/FieldsConcern.php";
 
 class BaseModel {
@@ -11,11 +10,7 @@ class BaseModel {
   public function __construct() {
     $this->tableName = strtolower(get_class($this)::$name);
     $this->fillables = get_class($this)::$fillableFields;
-
-    if (!$this->db) {
-      Connection::connect();
-      $this->db = Connection::getConnection();
-    }
+    $this->db = Connection::getInstance();
   }
 
   public function save($data) {
@@ -31,8 +26,13 @@ class BaseModel {
       $stmt->bindValue(':' . $key, $value);
     }
 
-    $stmt->execute();
-    return $this->db->lastInsertId();
+    try {
+      $stmt->execute();
+      return $this->db->lastInsertId();
+    } catch(PDOException $e) {
+      echo "Error de conexión: " . $e;
+      exit;
+    }
   }
 
   public function find($id) {
@@ -40,8 +40,13 @@ class BaseModel {
     $sql = "SELECT * FROM $tableName WHERE id = :id";
     $stmt = $this->db->prepare($sql);
     $stmt->bindValue(':id', $id, PDO::PARAM_INT);
-    $stmt->execute();
-    return $stmt->fetch(PDO::FETCH_ASSOC);
+    try {
+      $stmt->execute();
+      return $stmt->fetch(PDO::FETCH_ASSOC);
+    } catch(PDOException $e) {
+      echo "Error de conexión: " . $e;
+      exit;
+    }
   }
 
   public function update($id, $data) {
@@ -58,8 +63,13 @@ class BaseModel {
       $stmt->bindValue(':' . $key, $value);
     }
 
-    $stmt->execute();
-    return $stmt->rowCount();
+    try {
+      $stmt->execute();
+      return $stmt->rowCount();
+    } catch(PDOException $e) {
+      echo "Error de conexión: " . $e;
+      exit;
+    }
   }
 
   public function delete($id) {
@@ -67,8 +77,14 @@ class BaseModel {
     $sql = "DELETE FROM $tableName WHERE id = :id";
     $stmt = $this->db->prepare($sql);
     $stmt->bindValue(':id', $id, PDO::PARAM_INT);
-    $stmt->execute();
-    return $stmt->rowCount();
+
+    try {
+      $stmt->execute();
+      return $stmt->rowCount();
+    } catch(PDOException $e) {
+      echo "Error de conexión: " . $e;
+      exit;
+    }
   }
 
   public function findAll() {
@@ -84,16 +100,27 @@ class BaseModel {
     $sql = "SELECT * FROM $tableName WHERE $field = :value";
     $stmt = $this->db->prepare($sql);
     $stmt->bindValue(':value', $value);
-    $stmt->execute();
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    try {
+      $stmt->execute();
+      return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch(PDOException $e) {
+      echo "Error de conexión: " . $e;
+      exit;
+    }
   }
 
   public function count() {
     $tableName = $this->tableName;
     $sql = "SELECT COUNT(*) FROM $tableName";
     $stmt = $this->db->prepare($sql);
-    $stmt->execute();
-    return $stmt->fetchColumn();
+    try {
+      $stmt->execute();
+      return $stmt->fetchColumn();
+    } catch(PDOException $e) {
+      echo "Error de conexión: " . $e;
+      exit;
+    }
   }
 
   public function validate($data) {

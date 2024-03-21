@@ -9,37 +9,37 @@ class UsersController extends BaseController {
 
   public function __construct() {
     parent::__construct();
-    $this->userModel = new UserModel();
+    $this->userModel = new User();
     $this->indexUrl = '/'.Config::getAppPath().'/users';
   }
 
   # GET /users
   public function index() {
-    $users = $this->userModel->getAllUsers();
-    Render::view('users/index', ['users' => $users]);
+    $users = $this->userModel->findAll();
+    Render::view('users/index', compact('users'));
   }
 
   # GET /users/show/:id
   public function show($id) {
-    $user = $this->userModel->findById($id);
+    $user = $this->userModel->find($id);
 
     if ( empty($user))  return Redirect::to($this->indexUrl);
 
-    Render::view('users/show', ['user' => $user]);
+    Render::view('users/show', compact('user'));
   }
 
   # GET users/edit/:id
   public function edit($id) {
-    $user = $this->userModel->findById($id);
+    $user = $this->userModel->find($id);
 
-    Render::view('users/edit', ['user' => $user]);
+    Render::view('users/edit', compact('user'));
   }
 
   # POST users/update/:id
   public function update($id) {
     $data = $_POST['user'];
 
-    $affected = $this->userModel->updateUser($id, $data);
+    $affected = $this->userModel->update($id, $data);
 
     if ($affected > 0) {
       Flashify::create([
@@ -53,7 +53,7 @@ class UsersController extends BaseController {
 
   # POST users/delete/:id
   public function delete($id) {
-    $affected = $this->userModel->deleteUser($id);
+    $affected = $this->userModel->delete($id);
 
     if ($affected > 0) {
       Flashify::create([

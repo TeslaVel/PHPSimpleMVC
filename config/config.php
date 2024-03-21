@@ -1,10 +1,16 @@
 <?php
-
-require_once 'config/routes.php';
-require_once "helpers/Sessionize.php";
+require_once "db/Connection.php";
+require_once 'config/Routes.php';
+require_once 'config/Logger.php';
+require_once 'config/ActionLogger.php';
+require_once "helpers/Cookie.php";
 require_once 'helpers/Flashify.php';
+require_once 'helpers/Auth.php';
+
 
 class Config {
+  public static $COOKIE_NAME = 'a2jd54a7e';
+
   public static function getRootPath() {
     $root = dirname(__FILE__);
     return str_replace('/config', "",  $root);

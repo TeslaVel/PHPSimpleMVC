@@ -2,9 +2,13 @@
 require_once 'BaseController.php';
 
 class HomeController extends BaseController {
-  public function __construct() {}
+  private $logger;
+  public function __construct(Logger $logger) {
+    $this->logger = $logger;
+  }
 
   public function index() {
+    $this->logger->log('Enter to home page');
     Render::view('home/index', []);
   }
 }

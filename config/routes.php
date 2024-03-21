@@ -16,10 +16,17 @@
     # Messages roues
     '/messages' => 'MessagesController@index',
     '/messages/create' => 'MessagesController@create',
-    '/messages/new' => 'MessagesController@new',
     '/messages/(?<id>\d+)' => 'MessagesController@show',
     '/messages/edit/(?<id>\d+)' => 'MessagesController@edit',
     '/messages/delete/(?<id>\d+)' => 'MessagesController@delete',
     '/messages/update/(?<id>\d+)' => 'MessagesController@update',
+    # Messages roues
+    '/posts' => 'PostsController@index',
+    '/posts/create' => 'PostsController@create',
+    '/posts/new' => 'PostsController@new',
+    '/posts/(?<id>\d+)' => 'PostsController@show',
+    '/posts/edit/(?<id>\d+)' => 'PostsController@edit',
+    '/posts/delete/(?<id>\d+)' => 'PostsController@delete',
+    '/posts/update/(?<id>\d+)' => 'PostsController@update',
   ];
 ?>

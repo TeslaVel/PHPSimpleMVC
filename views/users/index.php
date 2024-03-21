@@ -3,7 +3,7 @@ ob_start();
 ?>
 
 <div>
-  <?= '<h1 class="text-center">Users</h1>'; ?>
+  <h1 class="text-center">Users</h1>
   <div class="text-right">
     <a
       class="btn btn-success"

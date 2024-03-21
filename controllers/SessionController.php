@@ -6,13 +6,13 @@ class SessionController extends BaseController {
   public $indexUrl;
   public function __construct() {
     parent::__construct();
-    $this->userModel = new UserModel();
+    $this->userModel = new User();
     $this->indexUrl = '/'.Config::getAppPath().'/';
   }
 
   public function signin() {
 
-    if (Session::check('userSession') ) {
+    if (Auth::check() ) {
       Flashify::create([
         'type' => 'info',
         'message' => 'User is already logged',
@@ -48,8 +48,7 @@ class SessionController extends BaseController {
       return  Redirect::to($this->indexUrl);
     }
 
-    Session::create('userSession', ['user_id' => $user['id']]);
-
+    Auth::store(['user_id' => $user['id']]);
     Redirect::to($this->indexUrl);
   }
 
@@ -104,7 +103,7 @@ class SessionController extends BaseController {
   }
 
   public function destroy() {
-    Session::destroy('userSession');
+    Auth::destroy();
     Redirect::to($this->indexUrl);
   }
 }

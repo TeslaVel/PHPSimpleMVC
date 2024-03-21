@@ -7,9 +7,9 @@ ob_start();
     <h6 class="card-subtitle mb-2 text-muted"></h6>
     <p class="card-text">
       <ul class="list-unstyled">
-        <li><strong>Title:</strong> <?php echo $message['title']; ?></li>
         <li><strong>Message:</strong> <?php echo $message['message']; ?></li>
         <li><strong>User:</strong> <?php echo $message['user_id']; ?></li>
+        <li><strong>Post:</strong> <?php echo $message['post_id']; ?></li>
       </ul>
     </p>
     <div class="d-flex justify-content-center mt-5">

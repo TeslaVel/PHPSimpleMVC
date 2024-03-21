@@ -1,6 +1,6 @@
 <footer class="bg-info text-center text-lg-start fixed-bottom">
   <!-- Grid container -->
-  <div class="container p-4">
+  <div class="container p-2">
     <!--Grid row-->
     <div class="row">
       <!--Grid column-->
@@ -17,9 +17,6 @@
           <li>
             <a href="#!" class="text-dark">Link 3</a>
           </li>
-          <li>
-            <a href="#!" class="text-dark">Link 4</a>
-          </li>
         </ul>
       </div>
       <!--Grid column-->
@@ -37,9 +34,6 @@
           </li>
           <li>
             <a href="#!" class="text-dark">Link 3</a>
-          </li>
-          <li>
-            <a href="#!" class="text-dark">Link 4</a>
           </li>
         </ul>
       </div>
@@ -59,9 +53,6 @@
           <li>
             <a href="#!" class="text-dark">Link 3</a>
           </li>
-          <li>
-            <a href="#!" class="text-dark">Link 4</a>
-          </li>
         </ul>
       </div>
       <!--Grid column-->
@@ -80,9 +71,6 @@
           <li>
             <a href="#!" class="text-dark">Link 3</a>
           </li>
-          <li>
-            <a href="#!" class="text-dark">Link 4</a>
-          </li>
         </ul>
       </div>
       <!--Grid column-->
@@ -92,7 +80,7 @@
   <!-- Grid container -->
 
   <!-- Copyright -->
-  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+  <div class="text-center p-2" style="background-color: rgba(0, 0, 0, 0.2);">
     © 2020 Copyright:
     <a class="text-dark" href="https://mdbootstrap.com/">MDBootstrap.com</a>
   </div>

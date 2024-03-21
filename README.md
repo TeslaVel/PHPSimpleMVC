@@ -3,24 +3,34 @@
 # Folder Structure
 
 - `config/`
-    * `routes.php`
-    * `config.php`
+    * `ActionLogger.php`
+    * `Config.php`
+    * `Routes.php`
+    * `Logger.php`
 - `db/`
-    * `connection.php`
+    * `Connection.php`
 - `controllers/`
     * `BaseController.php`
     * `HomeController.php`
     * `MessagesController.php`
+    * `PostsController.php`
+    * `SessionsController.php`
     * `UsersController.php`
 - `models/`
     * `concerns/`
         * `FieldsConcern.php`
     * `BaseModel.php`
-    * `MessageModel.php`
-    * `UserModel.php`
+    * `Message.php`
+    * `Post.php`
+    * `User.php`
 - `helpers/`
+    * `Auth.php`
+    * `Cookie.php`
     * `Flashify.php`
+    * `Redirect.php`
 - `views/`
+    - `home/`
+        * `index.php`
     - `users/`
         * `index.php`
         * `show.php`
@@ -30,7 +40,14 @@
         * `index.php`
         * `show.php`
         * `edit.php`
-        * `new.php`
+    - `posts/`
+        * `index.php`
+        * `show.php`
+        * `edit.php`
+        * `mew.php`
+    - `sessions/`
+        * `signin.php`
+        * `signup.php`
     * `footer.php`
     * `layout.php`
     * `menu.php`
