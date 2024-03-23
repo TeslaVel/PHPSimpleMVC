@@ -5,17 +5,27 @@
 - `config/`
     * `ActionLogger.php`
     * `Config.php`
-    * `Routes.php`
+    * `Handler.php`
     * `Logger.php`
-- `db/`
-    * `Connection.php`
+    * `Routes.php`
 - `controllers/`
+     * `concerns/`
+        * `Renderize.php`
     * `BaseController.php`
     * `HomeController.php`
     * `MessagesController.php`
     * `PostsController.php`
     * `SessionsController.php`
     * `UsersController.php`
+- `db/`
+    * `Connection.php`
+- `helpers/`
+    * `Auth.php`
+    * `Cookie.php`
+    * `Flashify.php`
+    * `Redirect.php`
+- `middlewares/`
+    * `AuthMiddleware.php`
 - `models/`
     * `concerns/`
         * `FieldsConcern.php`
@@ -23,11 +33,6 @@
     * `Message.php`
     * `Post.php`
     * `User.php`
-- `helpers/`
-    * `Auth.php`
-    * `Cookie.php`
-    * `Flashify.php`
-    * `Redirect.php`
 - `views/`
     - `home/`
         * `index.php`

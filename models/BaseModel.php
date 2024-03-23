@@ -1,16 +1,28 @@
 <?php
 require_once "concerns/FieldsConcern.php";
+require_once "concerns/Collection.php";
 
 class BaseModel {
   use FieldsConcern;
-  protected $db;
+  use Collection;
+
   private $fillables;
   private $tableName;
+  protected $object;
+  // protected $collection;
+  protected $db;
 
   public function __construct() {
     $this->tableName = strtolower(get_class($this)::$name);
     $this->fillables = get_class($this)::$fillableFields;
     $this->db = Connection::getInstance();
+  }
+
+  public function __get($property) {
+    if (array_key_exists($property, $this->object)) {
+      return $this->object[$property];
+    }
+    return null;
   }
 
   public function save($data) {
@@ -28,7 +40,9 @@ class BaseModel {
 
     try {
       $stmt->execute();
-      return $this->db->lastInsertId();
+      $id = $this->db->lastInsertId();
+      $this->object = $this->find($id);
+      return $this;
     } catch(PDOException $e) {
       echo "Error de conexión: " . $e;
       exit;
@@ -42,14 +56,16 @@ class BaseModel {
     $stmt->bindValue(':id', $id, PDO::PARAM_INT);
     try {
       $stmt->execute();
-      return $stmt->fetch(PDO::FETCH_ASSOC);
+      $this->object = $stmt->fetch(PDO::FETCH_ASSOC);
+      return $this;
+      // return new (get_class($this))($data);
     } catch(PDOException $e) {
       echo "Error de conexión: " . $e;
       exit;
     }
   }
 
-  public function update($id, $data) {
+  public function update($data) {
 
     $tableName = $this->tableName;
     list($preparedFields, $filteredData) = $this->bindToUpdate($this->fillables, $data);;
@@ -57,7 +73,7 @@ class BaseModel {
     $sql = "UPDATE $tableName SET " . implode(', ', $preparedFields) . " WHERE id = :id";
 
     $stmt = $this->db->prepare($sql);
-    $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+    $stmt->bindValue(':id', $this->id, PDO::PARAM_INT);
 
     foreach ($filteredData as $key => $value) {
       $stmt->bindValue(':' . $key, $value);
@@ -65,6 +81,7 @@ class BaseModel {
 
     try {
       $stmt->execute();
+      $this->object = $this->find($this->id);
       return $stmt->rowCount();
     } catch(PDOException $e) {
       echo "Error de conexión: " . $e;
@@ -72,11 +89,11 @@ class BaseModel {
     }
   }
 
-  public function delete($id) {
+  public function delete() {
     $tableName = $this->tableName;
     $sql = "DELETE FROM $tableName WHERE id = :id";
     $stmt = $this->db->prepare($sql);
-    $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+    $stmt->bindValue(':id', $this->id, PDO::PARAM_INT);
 
     try {
       $stmt->execute();
@@ -91,8 +108,16 @@ class BaseModel {
     $tableName = $this->tableName;
     $sql = "SELECT * FROM $tableName";
     $stmt = $this->db->prepare($sql);
-    $stmt->execute();
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    try {
+      $stmt->execute();
+      $this->collect(
+        $stmt->fetchAll(PDO::FETCH_ASSOC)
+      );
+      return $this;
+    } catch(PDOException $e) {
+      echo "Error de conexión: " . $e;
+      exit;
+    }
   }
 
   public function findBy($field, $value) {
@@ -103,7 +128,10 @@ class BaseModel {
 
     try {
       $stmt->execute();
-      return $stmt->fetchAll(PDO::FETCH_ASSOC);
+      $this->collect(
+        $stmt->fetchAll(PDO::FETCH_ASSOC)
+      );
+      return $this;
     } catch(PDOException $e) {
       echo "Error de conexión: " . $e;
       exit;

@@ -15,7 +15,8 @@ class MessagesController extends BaseController {
 
   public function index() {
     $this->logger->log('Enter to Index Messages');
-    $messages = $this->messageModel->findAll();
+    $messages = $this->messageModel->findAll()->all();
+
     Render::view('messages/index', compact('messages'));
   }
 
@@ -27,16 +28,15 @@ class MessagesController extends BaseController {
     Render::view('messages/show', compact('message'));
   }
 
-  public function new() {
-    $userModel = new User();
-    $users = $userModel->findAll();
+  // public function new() {
+  //   $userModel = new User();
+  //   $users = $userModel->findAll()->all();
 
-    Render::view('messages/new', compact('users'));
-  }
+  //   Render::view('messages/new', compact('users'));
+  // }
 
   public function create() {
     $data = $_POST['message'];
-    $userModel = new User();
     $user_id = Auth::user()['id'];
 
     if ( !Auth::check() ) return Redirect::to($this->indexUrl);
@@ -59,11 +59,10 @@ class MessagesController extends BaseController {
   public function edit($id) {
     $message = $this->messageModel->find($id);
     $userModel = new User();
-    $users = $userModel->findAll();
+    $users = $userModel->findAll()->all();
 
     if ( empty($message)) return Redirect::to($this->indexUrl);
 
-    $message = $this->messageModel->find($id);
     Render::view('messages/edit', compact('message', 'users'));
   }
 
@@ -74,7 +73,7 @@ class MessagesController extends BaseController {
 
     $data = $_POST['message'];
 
-    $affected = $this->messageModel->update($id, $data);
+    $affected = $message->update($data);
 
     if ($affected > 0) {
       Flashify::create([
@@ -87,8 +86,8 @@ class MessagesController extends BaseController {
   }
 
   public function delete($id) {
-    $affected = $this->messageModel->delete($id);
-    $post_id = $_POST['post_id'];
+    $message = $this->messageModel->find($id);
+    $affected = $message->delete();
 
     if ($affected > 0) {
       Flashify::create([
@@ -97,6 +96,6 @@ class MessagesController extends BaseController {
       ]);
     }
 
-    return Redirect::to($this->indexUrl.'/'.$post_id);
+    return Redirect::to($this->indexUrl.'/'.$message->post_id);
   }
 }

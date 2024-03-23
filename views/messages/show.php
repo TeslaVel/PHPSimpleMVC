@@ -7,13 +7,13 @@ ob_start();
     <h6 class="card-subtitle mb-2 text-muted"></h6>
     <p class="card-text">
       <ul class="list-unstyled">
-        <li><strong>Message:</strong> <?php echo $message['message']; ?></li>
-        <li><strong>User:</strong> <?php echo $message['user_id']; ?></li>
-        <li><strong>Post:</strong> <?php echo $message['post_id']; ?></li>
+        <li><strong>Message:</strong> <?php echo $message->message; ?></li>
+        <li><strong>User:</strong> <?php echo $message->user_id; ?></li>
+        <li><strong>Post:</strong> <?php echo $message->post_id; ?></li>
       </ul>
     </p>
     <div class="d-flex justify-content-center mt-5">
-      <a href="/<?php echo  Config::getAppPath(); ?>/messages/edit/<?php echo $message['id']; ?>" class="btn btn-success mx-2">Edit</a>
+      <a href="/<?php echo  Config::getAppPath(); ?>/messages/edit/<?php echo $message->id; ?>" class="btn btn-success mx-2">Edit</a>
       <a href="/<?php echo  Config::getAppPath(); ?>/messages" class="btn btn-danger mx-2">Back</a>
     </div>
   </div>

@@ -27,15 +27,14 @@ class SessionController extends BaseController {
   public function create() {
     $data = $_POST['session'];
 
-    $user = $this->userModel->findBy('email', $data['email'])[0];
-
+    $user = $this->userModel->findBy('email', $data['email'])->first();
     $exception = null;
 
     if (!$user) {
       $exception = "User not found";
     }
 
-    if (!password_verify($data['password'], $user["password"])) {
+    if (!password_verify($data['password'], $user->password)) {
       $exception = "Invalid Password";
     }
 
@@ -48,14 +47,13 @@ class SessionController extends BaseController {
       return  Redirect::to($this->indexUrl);
     }
 
-    Auth::store(['user_id' => $user['id']]);
+    Auth::store(['user_id' => $user->id]);
     Redirect::to($this->indexUrl);
   }
 
   public function signup() {
     Render::view('session/signup', []);
   }
-
   public function register() {
     $data = $_POST['session'];
 
@@ -85,7 +83,7 @@ class SessionController extends BaseController {
       'password' =>  $encrypted
     ];
 
-    $id = $this->userModel->createUser($newData);
+    $id = $this->userModel->save($newData);
 
     if ($id > 0) {
       Flashify::create([

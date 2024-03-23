@@ -1,12 +1,13 @@
 <?php
 require_once "db/Connection.php";
-require_once 'config/Routes.php';
 require_once 'config/Logger.php';
 require_once 'config/ActionLogger.php';
 require_once "helpers/Cookie.php";
 require_once 'helpers/Flashify.php';
 require_once 'helpers/Auth.php';
-
+require_once 'helpers/Redirect.php';
+require_once 'middlewares/AuthMiddleware.php';
+require_once 'config/Routes.php';
 
 class Config {
   public static $COOKIE_NAME = 'a2jd54a7e';

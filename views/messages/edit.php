@@ -9,10 +9,10 @@ ob_start();
 
 ?>
 <div class="col-4 mx-auto pt-3">
-  <form action="/<?php echo Config::getAppPath(); ?>/messages/update/<?php echo $message['id']; ?>" method="POST" class="mb-3">
+  <form action="/<?php echo Config::getAppPath(); ?>/messages/update/<?php echo $message->id; ?>" method="POST" class="mb-3">
     <div class="form-group">
         <label for="message">Message:</label>
-        <textarea name="message[message]" id="message" class="form-control" required><?php echo $message['message']; ?></textarea>
+        <textarea name="message[message]" id="message" class="form-control" required><?php echo $message->message; ?></textarea>
     </div>
 
     <div class="text-center">

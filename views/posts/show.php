@@ -7,20 +7,20 @@ ob_start();
     <h6 class="card-subtitle mb-2 text-muted"></h6>
     <p class="card-text">
       <ul class="list-unstyled">
-        <li><strong>Title:</strong> <?php echo $post['title']; ?></li>
-        <li><strong>Body:</strong> <?php echo $post['body']; ?></li>
-        <li><strong>User:</strong> <?php echo $post['user_id']; ?></li>
+        <li><strong>Title:</strong> <?php echo $post->title; ?></li>
+        <li><strong>Body:</strong> <?php echo $post->body; ?></li>
+        <li><strong>User:</strong> <?php echo $post->user_id; ?></li>
       </ul>
     </p>
     <div class="d-flex justify-content-end mt-2">
-      <a href="/<?php echo  Config::getAppPath(); ?>/posts/edit/<?php echo $post['id']; ?>" class="btn btn-success mx-1">Edit</a>
+      <a href="/<?php echo  Config::getAppPath(); ?>/posts/edit/<?php echo $post->id; ?>" class="btn btn-success mx-1">Edit</a>
       <a href="/<?php echo  Config::getAppPath(); ?>/posts" class="btn btn-danger mx-1">Back</a>
     </div>
   </div>
   <hr>
 
   <form action="/<?php echo Config::getAppPath(); ?>/messages/create" method="post" class="mb-3">
-    <input type="hidden" name="message[post_id]" value="<?php echo $post['id']; ?>">
+    <input type="hidden" name="message[post_id]" value="<?php echo $post->id; ?>">
     <div class="form-group">
       <label for="message">Message:</label>
       <textarea name="message[message]" id="message" class="form-control" required></textarea>
@@ -43,15 +43,15 @@ ob_start();
         <div class="card-body p-3">
           <h6 class="card-subtitle mb-2 text-muted"></h6>
           <p class="card-text">
-            <?php echo $msg['message']; ?>
+            <?php echo $msg->message; ?>
           </p>
           <div>
-            Created by: <?php echo $msg['user_id']; ?>
+            Created by: <?php echo $msg->user_id; ?>
           </div>
           <div class="d-flex justify-content-end mt-2">
-            <a href="/<?php echo  Config::getAppPath(); ?>/messages/edit/<?php echo $msg['id']; ?>" class="btn btn-success mx-1">Edit</a>
-            <form style="display:inline-block;" method="POST" action="/<?php echo Config::getAppPath(); ?>/messages/delete/<?php echo $msg['id']; ?>">
-              <input type="hidden" name="post_id" value="<?php echo $post['id']; ?>">
+            <a href="/<?php echo  Config::getAppPath(); ?>/messages/edit/<?php echo $msg->id; ?>" class="btn btn-success mx-1">Edit</a>
+            <form style="display:inline-block;" method="POST" action="/<?php echo Config::getAppPath(); ?>/messages/delete/<?php echo $msg->id; ?>">
+              <input type="hidden" name="post_id" value="<?php echo $post->id; ?>">
               <button type="submit" class="btn btn-sm btn-danger mx-1 p-2" onclick="return confirm('Are you sure you want to delete this message?')">Delete</button>
             </form>
           </div>

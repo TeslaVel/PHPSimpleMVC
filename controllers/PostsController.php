@@ -12,14 +12,14 @@ class PostsController extends BaseController {
   }
 
   public function index() {
-    $posts = $this->postModel->findAll();
+    $posts = $this->postModel->findAll()->all();
     Render::view('posts/index', compact('posts'));
   }
 
   public function show($id) {
     $post = $this->postModel->find($id);
     $messageModel = new Message();
-    $messages = $messageModel->findBy('post_id', $id);
+    $messages = $messageModel->findBy('post_id', $id)->all();
 
     if ( empty($post)) return Redirect::to($this->indexUrl);
 
@@ -28,7 +28,7 @@ class PostsController extends BaseController {
 
   public function new() {
     $userModel = new User();
-    $users = $userModel->findAll();
+    $users = $userModel->findAll()->all();
 
     Render::view('posts/new', compact('users'));
   }
@@ -58,13 +58,10 @@ class PostsController extends BaseController {
 
   public function edit($id) {
     $post = $this->postModel->find($id);
-    $userModel = new User();
-    $users = $userModel->findAll();
 
     if ( empty($post)) return Redirect::to($this->indexUrl);
 
-    $post = $this->postModel->find($id);
-    Render::view('posts/edit', compact('post', 'users'));
+    Render::view('posts/edit', compact('post'));
   }
 
   public function update($id) {
@@ -81,7 +78,7 @@ class PostsController extends BaseController {
       'user_id' => $user_id
     ];
 
-    $affected = $this->postModel->update($id, $newData);
+    $affected = $post->update($newData);
 
     if ($affected > 0) {
       Flashify::create([
@@ -94,7 +91,7 @@ class PostsController extends BaseController {
   }
 
   public function delete($id) {
-    $affected = $this->postModel->delete($id);
+    $affected = $this->postModel->find($id)->delete();
 
     if ($affected > 0) {
       Flashify::create([

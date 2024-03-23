@@ -15,7 +15,7 @@ class UsersController extends BaseController {
 
   # GET /users
   public function index() {
-    $users = $this->userModel->findAll();
+    $users = $this->userModel->findAll()->all();
     Render::view('users/index', compact('users'));
   }
 
@@ -37,9 +37,10 @@ class UsersController extends BaseController {
 
   # POST users/update/:id
   public function update($id) {
+    $user = $this->userModel->find($id);
     $data = $_POST['user'];
 
-    $affected = $this->userModel->update($id, $data);
+    $affected = $user->update($data);
 
     if ($affected > 0) {
       Flashify::create([
@@ -53,7 +54,7 @@ class UsersController extends BaseController {
 
   # POST users/delete/:id
   public function delete($id) {
-    $affected = $this->userModel->delete($id);
+    $affected = $this->userModel->find($id)->delete();
 
     if ($affected > 0) {
       Flashify::create([

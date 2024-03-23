@@ -1,12 +1,14 @@
 <?php
+
   $routes = [
     '/' => 'HomeController@index',
     # Users routes
-    '/users' => 'UsersController@index',
-    '/users/(?<id>\d+)' => 'UsersController@show',
-    '/users/edit/(?<id>\d+)' => 'UsersController@edit',
-    '/users/delete/(?<id>\d+)' => 'UsersController@delete',
-    '/users/update/(?<id>\d+)' => 'UsersController@update',
+    '/users' => ['middleware' => 'AuthMiddleware', 'action' => 'UsersController@index'],
+    // '/users' => 'UsersController@index',
+    '/users/{id}' => 'UsersController@show',
+    '/users/edit/{id}' => 'UsersController@edit',
+    '/users/delete/{id}' => 'UsersController@delete',
+    '/users/update/{id}' => 'UsersController@update',
     # Sessions
     '/session/signin' => 'SessionController@signin',
     '/session/create' => 'SessionController@create',
@@ -16,17 +18,16 @@
     # Messages roues
     '/messages' => 'MessagesController@index',
     '/messages/create' => 'MessagesController@create',
-    '/messages/(?<id>\d+)' => 'MessagesController@show',
-    '/messages/edit/(?<id>\d+)' => 'MessagesController@edit',
-    '/messages/delete/(?<id>\d+)' => 'MessagesController@delete',
-    '/messages/update/(?<id>\d+)' => 'MessagesController@update',
+    '/messages/{id}' => 'MessagesController@show',
+    '/messages/edit/{id}' => 'MessagesController@edit',
+    '/messages/delete/{id}' => 'MessagesController@delete',
+    '/messages/update/{id}' => 'MessagesController@update',
     # Messages roues
     '/posts' => 'PostsController@index',
     '/posts/create' => 'PostsController@create',
     '/posts/new' => 'PostsController@new',
-    '/posts/(?<id>\d+)' => 'PostsController@show',
-    '/posts/edit/(?<id>\d+)' => 'PostsController@edit',
-    '/posts/delete/(?<id>\d+)' => 'PostsController@delete',
-    '/posts/update/(?<id>\d+)' => 'PostsController@update',
+    '/posts/{id}' => 'PostsController@show',
+    '/posts/edit/{id}' => 'PostsController@edit',
+    '/posts/delete/{id}' => 'PostsController@delete',
+    '/posts/update/{id}' => 'PostsController@update',
   ];
-?>
