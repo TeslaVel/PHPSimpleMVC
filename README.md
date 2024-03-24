@@ -29,6 +29,7 @@
 - `models/`
     * `concerns/`
         * `FieldsConcern.php`
+        * `Collection.php`
     * `BaseModel.php`
     * `Message.php`
     * `Post.php`

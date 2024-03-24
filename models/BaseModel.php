@@ -9,7 +9,6 @@ class BaseModel {
   private $fillables;
   private $tableName;
   protected $object;
-  // protected $collection;
   protected $db;
 
   public function __construct() {

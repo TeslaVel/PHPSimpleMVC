@@ -34,13 +34,6 @@ trait Collection {
   }
 
   public function collect($array) {
-    // $data = array_map(function ($arr, $index) {
-    //   $className = get_called_class();
-    //   $obj = $index === 0 ? $this : new $className();
-    //   $obj->object = $arr;
-    //   return $obj;
-    // }, $array, array_keys($array));
-
     array_walk($array, function ($arr, $index) {
       $className = get_called_class();
       $obj = $index === 0 ? $this : new $className();
@@ -49,24 +42,5 @@ trait Collection {
     });
 
     return $this;
-  }
-
-  // public function find($id) {
-  //   return parent::find($id);
-  // }
-
-  // public function save($data) {
-  //   return parent::save($data);
-  // }
-
-  // public function update($data) {
-  //   return parent::update($data);
-  // }
-
-  public static function __callStatic($method, $args) {
-    echo "Intercepted static method is " . $method . "<br>";
-    echo "Intercepted static args <br>";
-    print_r($args);
-    exit;
   }
 }
