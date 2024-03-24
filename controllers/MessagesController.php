@@ -39,8 +39,6 @@ class MessagesController extends BaseController {
     $data = $_POST['message'];
     $user_id = Auth::user()['id'];
 
-    if ( !Auth::check() ) return Redirect::to($this->indexUrl);
-
     $id = $this->messageModel->save([
       ...$data,
       'user_id' => $user_id

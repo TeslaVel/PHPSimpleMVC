@@ -1,6 +1,4 @@
 <?php
-require_once "concerns/Renderize.php";
-
 require_once './models/Message.php';
 require_once './models/User.php';
 require_once './models/Post.php';

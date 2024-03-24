@@ -23,7 +23,7 @@ class UsersController extends BaseController {
   public function show($id) {
     $user = $this->userModel->find($id);
 
-    if ( empty($user))  return Redirect::to($this->indexUrl);
+    if ( empty($user)) return Redirect::to($this->indexUrl);
 
     Render::view('users/show', compact('user'));
   }

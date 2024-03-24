@@ -3,7 +3,7 @@ require_once 'BaseController.php';
 
 class HomeController extends BaseController {
   private $logger;
-  public function __construct(Logger $logger) {
+  public function __construct(Logger $logger = null) {
     $this->logger = $logger;
   }
 

@@ -8,9 +8,8 @@
     * `Handler.php`
     * `Logger.php`
     * `Routes.php`
+    * `Router.php`
 - `controllers/`
-     * `concerns/`
-        * `Renderize.php`
     * `BaseController.php`
     * `HomeController.php`
     * `MessagesController.php`
@@ -24,8 +23,9 @@
     * `Cookie.php`
     * `Flashify.php`
     * `Redirect.php`
+    * `Renderize.php`
 - `middlewares/`
-    * `AuthMiddleware.php`
+    * `Filters.php`
 - `models/`
     * `concerns/`
         * `FieldsConcern.php`

@@ -6,7 +6,9 @@ require_once "helpers/Cookie.php";
 require_once 'helpers/Flashify.php';
 require_once 'helpers/Auth.php';
 require_once 'helpers/Redirect.php';
-require_once 'middlewares/AuthMiddleware.php';
+require_once 'helpers/Renderize.php';
+require_once 'config/Router.php';
+require_once 'middlewares/Filters.php';
 require_once 'config/Routes.php';
 
 class Config {

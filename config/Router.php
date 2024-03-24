@@ -1,0 +1,95 @@
+<?php
+
+class Router {
+  private static $protected_paths = [];
+  private static $routes = [];
+  private static $currentFilter = [];
+  private static $filters = [];
+
+  public static function get($uri, $handler) {
+    self::add('GET', $uri, $handler);
+  }
+
+  public static function post($uri, $handler) {
+    self::add('POST', $uri, $handler);
+  }
+
+  public static function add($method, $uri, $handler) {
+    if( self::$currentFilter != null) {
+      $filter = self::$currentFilter;
+      self::$routes[$method][$uri] = $filter($handler);
+    } else {
+      self::$routes[$method][$uri] = $handler;
+    }
+  }
+
+  public static function routes() {
+    return self::$routes;
+  }
+
+  public static function match($method, $uri) {
+    foreach (self::$routes[$method] as $pattern => $handler) {
+      // $pattern = preg_replace('/\{([^\}]*)\}/', '(?<$1>[^\/]+)', $pattern);
+      $pattern = preg_replace('/\{(\w+)\}/', '(?<$1>\d+)', $pattern);
+      if (preg_match("#^{$pattern}$#", $uri, $matches)) {
+        array_shift($matches);
+        return [$handler, $matches];
+      }
+    }
+
+    return null;
+  }
+
+  public static function dispatch($method, $uri) {
+    $route = self::match($method, $uri);
+    if ($route) {
+      $handler = $route[0];
+      $params = $route[1];
+      self::callHandler($handler, $params);
+    } else {
+        echo "404 Not Found";
+        exit;
+    }
+  }
+
+  public static function checkIfExistsController($controllerName) {
+    return file_exists(Config::getRootPath()."/controllers/$controllerName.php");
+  }
+
+  private static function callHandler($handler, $params) {
+    if (is_callable($handler)) {
+      call_user_func($handler, $params);
+
+    } elseif (is_string($handler)) {
+      list($controllerName, $method) = explode('@', $handler);
+
+      if (!self::checkIfExistsController($controllerName)) {
+        echo "<br>Controller $controllerName: not found";
+        exit;
+      }
+
+      $controllerPath = "controllers/$controllerName.php";
+        include_once $controllerPath;
+
+        $logger = new ActionLogger();
+        $controller = new $controllerName($logger);
+        if (isset($params) && count($params) > 1) {
+          $controller->$method(...array_values($params));
+        } else {
+          $controller->$method();
+        }
+    } else {
+      echo "Invalid action";
+    }
+  }
+
+  public static function group($array, $callback) {
+    if(isset($array)) self::$currentFilter = self::$filters[$array['before']];
+    $callback();
+    if(isset($array)) self::$currentFilter = null ;
+  }
+
+  public static function filter($name, $callback) {
+    self::$filters[$name] = $callback;
+  }
+}
