@@ -4,7 +4,7 @@
 
 - `config/`
     * `ActionLogger.php`
-    * `Config.php`
+    * `URL.php`
     * `Handler.php`
     * `Logger.php`
     * `Routes.php`
@@ -16,6 +16,8 @@
     * `PostsController.php`
     * `SessionsController.php`
     * `UsersController.php`
+- `core/`
+    * `ini.php`
 - `db/`
     * `Connection.php`
 - `helpers/`

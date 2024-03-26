@@ -6,6 +6,7 @@ class Flashify {
     $_SESSION['flash'] = [
       'message' => $params['message'],
       'type' => $params['type'],
+      'alert_type' => 'banner',
     ];
   }
 

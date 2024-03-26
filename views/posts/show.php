@@ -13,13 +13,13 @@ ob_start();
       </ul>
     </p>
     <div class="d-flex justify-content-end mt-2">
-      <a href="/<?php echo  Config::getAppPath(); ?>/posts/edit/<?php echo $post->id; ?>" class="btn btn-success mx-1">Edit</a>
-      <a href="/<?php echo  Config::getAppPath(); ?>/posts" class="btn btn-danger mx-1">Back</a>
+      <a href="/<?php echo  URL::getAppPath(); ?>/posts/edit/<?php echo $post->id; ?>" class="btn btn-success mx-1">Edit</a>
+      <a href="/<?php echo  URL::getAppPath(); ?>/posts" class="btn btn-danger mx-1">Back</a>
     </div>
   </div>
   <hr>
 
-  <form action="/<?php echo Config::getAppPath(); ?>/messages/create" method="post" class="mb-3">
+  <form action="/<?php echo URL::getAppPath(); ?>/messages/create" method="post" class="mb-3">
     <input type="hidden" name="message[post_id]" value="<?php echo $post->id; ?>">
     <div class="form-group">
       <label for="message">Message:</label>
@@ -29,7 +29,7 @@ ob_start();
     <div class="text-center">
       <button type="submit" class="btn btn-primary">Create Message</button>
       <a class="btn btn-danger"
-        href="/<?php echo Config::getAppPath(); ?>/messages">
+        href="/<?php echo URL::getAppPath(); ?>/messages">
         Back
       </a>
     </div>
@@ -49,8 +49,8 @@ ob_start();
             Created by: <?php echo $msg->user_id; ?>
           </div>
           <div class="d-flex justify-content-end mt-2">
-            <a href="/<?php echo  Config::getAppPath(); ?>/messages/edit/<?php echo $msg->id; ?>" class="btn btn-success mx-1">Edit</a>
-            <form style="display:inline-block;" method="POST" action="/<?php echo Config::getAppPath(); ?>/messages/delete/<?php echo $msg->id; ?>">
+            <a href="/<?php echo  URL::getAppPath(); ?>/messages/edit/<?php echo $msg->id; ?>" class="btn btn-success mx-1">Edit</a>
+            <form style="display:inline-block;" method="POST" action="/<?php echo URL::getAppPath(); ?>/messages/delete/<?php echo $msg->id; ?>">
               <input type="hidden" name="post_id" value="<?php echo $post->id; ?>">
               <button type="submit" class="btn btn-sm btn-danger mx-1 p-2" onclick="return confirm('Are you sure you want to delete this message?')">Delete</button>
             </form>

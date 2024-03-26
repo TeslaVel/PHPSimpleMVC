@@ -9,7 +9,7 @@ ob_start();
 
 ?>
 <div class="col-4 mx-auto pt-3">
-  <form action="/<?php echo Config::getAppPath(); ?>/messages/update/<?php echo $message->id; ?>" method="POST" class="mb-3">
+  <form action="/<?php echo URL::getAppPath(); ?>/messages/update/<?php echo $message->id; ?>" method="POST" class="mb-3">
     <div class="form-group">
         <label for="message">Message:</label>
         <textarea name="message[message]" id="message" class="form-control" required><?php echo $message->message; ?></textarea>
@@ -18,7 +18,7 @@ ob_start();
     <div class="text-center">
       <button type="submit" class="btn btn-success">Update Message</button>
       <a class="btn btn-danger"
-        href="/<?php echo Config::getAppPath(); ?>/messages">
+        href="/<?php echo URL::getAppPath(); ?>/messages">
         Back
       </a>
     </div>

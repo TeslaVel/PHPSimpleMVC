@@ -53,7 +53,7 @@ class Router {
   }
 
   public static function checkIfExistsController($controllerName) {
-    return file_exists(Config::getRootPath()."/controllers/$controllerName.php");
+    return file_exists(URL::getRootPath()."/controllers/$controllerName.php");
   }
 
   private static function callHandler($handler, $params) {

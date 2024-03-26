@@ -2,7 +2,7 @@
 require_once "concerns/FieldsConcern.php";
 require_once "concerns/Collection.php";
 require_once "concerns/Errors.php";
-require_once "validators/Validator.php";
+require_once "core/validators/Validator.php";
 
 class BaseModel {
   use FieldsConcern;

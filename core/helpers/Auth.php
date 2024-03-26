@@ -1,6 +1,8 @@
 <?php
 require_once './models/User.php';
 class Auth {
+  public $user;
+
   public static function user() {
     if (Cookie::getCookie(Config::$COOKIE_NAME) == NULL) {
       return null;

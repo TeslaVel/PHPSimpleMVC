@@ -5,7 +5,7 @@ ob_start();
   <div class="card">
     <div class="card-header">Sign Up</div>
     <div class="card-body">
-      <form action="/<?php echo Config::getAppPath(); ?>/session/register" method="post">
+      <form action="/<?php echo URL::getAppPath(); ?>/session/register" method="post">
         <div class="form-group">
           <label for="first_name">First Name</label>
           <input type="text" class="form-control" id="first_name" name="session[first_name]" aria-describedby="nombreHelp" placeholder="Ingresa tu nombre completo">
@@ -25,7 +25,7 @@ ob_start();
         <div class="d-flex justify-content-center">
           <button type="submit" class="btn btn-success mx-2 self-left">Register</button>
           <a class="btn btn-primary mx-2"
-            href="/<?php echo Config::getAppPath(); ?>/session/signin">
+            href="/<?php echo URL::getAppPath(); ?>/session/signin">
             Sign In
           </a>
         </div>

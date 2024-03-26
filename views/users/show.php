@@ -13,8 +13,8 @@ ob_start();
       </ul>
     </p>
     <div class="d-flex justify-content-center mt-5">
-      <a href="/<?php echo  Config::getAppPath(); ?>/users/edit/<?php echo $user->id; ?>" class="btn btn-success mx-2">Edit</a>
-      <a href="/<?php echo  Config::getAppPath(); ?>/users" class="btn btn-danger mx-2">Back</a>
+      <a href="/<?php echo  URL::getAppPath(); ?>/users/edit/<?php echo $user->id; ?>" class="btn btn-success mx-2">Edit</a>
+      <a href="/<?php echo  URL::getAppPath(); ?>/users" class="btn btn-danger mx-2">Back</a>
     </div>
   </div>
 </div>

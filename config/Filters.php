@@ -6,7 +6,7 @@ Router::filter('Auth',function($action){
         'type' => 'danger',
         'message' => 'You are not logged to acces to this route',
       ]);
-      Redirect::to('/'.Config::getAppPath().'/session/signin');
+      Redirect::to('/'.URL::getAppPath().'/session/signin');
       exit;
     };
   }

@@ -1,5 +1,5 @@
 <?php
-require_once 'BaseController.php';
+require_once 'core/controllers/BaseController.php';
 
 class PostsController extends BaseController {
   public $indexUrl;
@@ -8,7 +8,7 @@ class PostsController extends BaseController {
   public function __construct() {
     parent::__construct();
     $this->postModel = new Post();
-    $this->indexUrl = '/'.Config::getAppPath().'/posts';
+    $this->indexUrl = '/'.URL::getAppPath().'/posts';
   }
 
   public function index() {

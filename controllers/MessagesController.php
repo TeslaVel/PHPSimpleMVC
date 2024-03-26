@@ -1,5 +1,5 @@
 <?php
-require_once 'BaseController.php';
+require_once 'core/controllers/BaseController.php';
 
 class MessagesController extends BaseController {
   public $indexUrl;
@@ -10,7 +10,7 @@ class MessagesController extends BaseController {
     parent::__construct();
     $this->logger = $logger;
     $this->messageModel = new Message();
-    $this->indexUrl = '/'.Config::getAppPath().'/posts';
+    $this->indexUrl = '/'.URL::getAppPath().'/posts';
   }
 
   public function index() {
@@ -80,7 +80,7 @@ class MessagesController extends BaseController {
       ]);
     }
 
-    return Redirect::to('/'.Config::getAppPath().'/messages/'.$id);
+    return Redirect::to('/'.URL::getAppPath().'/messages/'.$id);
   }
 
   public function delete($id) {

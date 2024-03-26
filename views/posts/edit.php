@@ -9,7 +9,7 @@ ob_start();
 
 ?>
 <div class="col-4 mx-auto pt-3">
-  <form action="/<?php echo Config::getAppPath(); ?>/posts/update/<?php echo $post->id; ?>" method="POST" class="mb-3">
+  <form action="/<?php echo URL::getAppPath(); ?>/posts/update/<?php echo $post->id; ?>" method="POST" class="mb-3">
     <div class="form-group">
         <label for="title">Title:</label>
         <input type="text" name="post[title]" id="title" class="form-control" value="<?php echo $post->title; ?>" required>
@@ -23,7 +23,7 @@ ob_start();
     <div class="text-center">
       <button type="submit" class="btn btn-success">Update Post</button>
       <a class="btn btn-danger"
-        href="/<?php echo Config::getAppPath(); ?>/posts">
+        href="/<?php echo URL::getAppPath(); ?>/posts">
         Back
       </a>
     </div>

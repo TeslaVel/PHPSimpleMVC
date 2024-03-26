@@ -1,5 +1,5 @@
 <?php
-require_once 'BaseController.php';
+require_once 'core/controllers/BaseController.php';
 
 class UsersController extends BaseController {
   use Redirect;
@@ -10,7 +10,7 @@ class UsersController extends BaseController {
   public function __construct() {
     parent::__construct();
     $this->userModel = new User();
-    $this->indexUrl = '/'.Config::getAppPath().'/users';
+    $this->indexUrl = '/'.URL::getAppPath().'/users';
   }
 
   # GET /users

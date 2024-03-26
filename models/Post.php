@@ -1,5 +1,5 @@
 <?php
-require_once "BaseModel.php";
+require_once "core/models/BaseModel.php";
 
 class Post extends BaseModel {
   public static $name = 'posts';

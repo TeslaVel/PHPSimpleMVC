@@ -1,5 +1,5 @@
 <?php
-require_once 'BaseController.php';
+require_once 'core/controllers/BaseController.php';
 
 class SessionController extends BaseController {
   private $userModel;
@@ -7,7 +7,7 @@ class SessionController extends BaseController {
   public function __construct() {
     parent::__construct();
     $this->userModel = new User();
-    $this->indexUrl = '/'.Config::getAppPath().'/';
+    $this->indexUrl = '/'.URL::getAppPath().'/';
   }
 
   public function signin() {

@@ -3,7 +3,7 @@ ob_start();
 ?>
 
 <div class="col-4 mx-auto pt-3">
-  <form action="/<?php echo Config::getAppPath(); ?>/users/update/<?php echo $user->id; ?>" method="POST" class="mb-3">
+  <form action="/<?php echo URL::getAppPath(); ?>/users/update/<?php echo $user->id; ?>" method="POST" class="mb-3">
     <input type="hidden" name="user_id" value="<?php echo $user->id; ?>">
     <div class="form-group">
         <label for="first_name">First Name:</label>
@@ -16,7 +16,7 @@ ob_start();
     <div class="text-center">
       <button type="submit" class="btn btn-success">Update User</button>
       <a class="btn btn-danger"
-        href="/<?php echo Config::getAppPath(); ?>/users">
+        href="/<?php echo URL::getAppPath(); ?>/users">
         Back
       </a>
     </div>
