@@ -13,4 +13,12 @@ class Message extends BaseModel {
   public static $fillableFields = Array(
     'message', 'created_at', 'updated_at', 'user_id', 'post_id'
   );
+
+  public function post() {
+    return $this->belongsTo(Post::class, 'post_id');
+  }
+
+  public function user() {
+    return $this->belongsTo(User::class, 'user_id');
+  }
 }

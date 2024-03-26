@@ -28,20 +28,14 @@ class MessagesController extends BaseController {
     Render::view('messages/show', compact('message'));
   }
 
-  // public function new() {
-  //   $userModel = new User();
-  //   $users = $userModel->findAll()->all();
-
-  //   Render::view('messages/new', compact('users'));
-  // }
-
   public function create() {
     $data = $_POST['message'];
-    $user_id = Auth::user()['id'];
+
+    if (!Auth::check()) return Redirect::to($this->indexUrl);
 
     $id = $this->messageModel->save([
       ...$data,
-      'user_id' => $user_id
+      'user_id' => Auth::user()->id
     ]);
 
     if ($id > 0) {

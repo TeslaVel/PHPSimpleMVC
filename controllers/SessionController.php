@@ -47,7 +47,7 @@ class SessionController extends BaseController {
       return  Redirect::to($this->indexUrl);
     }
 
-    Auth::store(['user_id' => $user->id]);
+    Auth::store($user);
     Redirect::to($this->indexUrl);
   }
 

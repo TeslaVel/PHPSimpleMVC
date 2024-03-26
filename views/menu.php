@@ -28,7 +28,7 @@
       if (Auth::check()) {
     ?>
       <span class="text-white d-flex align-items-center mx-1">
-       <span class="p-0">( <?php echo Auth::user()['first_name']; ?> )</span>
+       <span class="p-0">( <?php echo Auth::user()->first_name; ?> )</span>
        <a class="nav-link text-white p-1" href="/<?php echo URL::getAppPath(); ?>/session/destroy">Sign Out</a>
       </span>
     <?php

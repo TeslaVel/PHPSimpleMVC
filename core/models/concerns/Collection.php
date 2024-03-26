@@ -7,6 +7,10 @@ trait Collection {
     $this->collection[] = $item;
   }
 
+  public function countCollection() {
+    return count($this->collection);
+  }
+
   public function remove($item) {
     unset($this->collection[$item]);
   }
@@ -20,12 +24,17 @@ trait Collection {
   }
 
   public function first($number = 1) {
-    // return array_slice($this->collection, 0, $number);
+    if ($number > 1) {
+      return array_slice($this->collection, 0, $number);
+    }
     return $this->collection[0];
   }
 
   public function last($number = 1) {
-    // return array_slice($this->collection, -1 * $number, $number);
+    if ($number > 1) {
+      return array_slice($this->collection, -1 * $number, $number);
+    }
+
     return end($this->collection);
   }
 

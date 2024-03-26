@@ -7,10 +7,17 @@ class Post extends BaseModel {
   public static $validations = [
     'title' => 'required|string|min:4',
     'body' => 'required|string|min:4',
-    // 'password' => 'required|string|min:8|confirmed',
   ];
 
   public static $fillableFields = Array(
     'title', 'body', 'created_at', 'updated_at', 'user_id'
   );
+
+  public function messages() {
+    return $this->hasMany(Message::class, 'post_id' , 'id');
+  }
+
+  public function user() {
+    return $this->belongsTo(User::class, 'user_id');
+  }
 }

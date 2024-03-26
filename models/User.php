@@ -14,4 +14,12 @@ class User extends BaseModel {
   public static $fillableFields = [
     'first_name', 'last_name', 'created_at', 'updated_at', 'email', 'password'
   ];
+
+  public function posts() {
+    return $this->hasMany(Post::class, 'user_id', 'id');
+  }
+
+  public function messages() {
+    return $this->hasMany(Message::class, 'user_id', 'id');
+  }
 }

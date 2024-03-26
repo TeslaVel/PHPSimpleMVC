@@ -18,6 +18,7 @@ class PostsController extends BaseController {
 
   public function show($id) {
     $post = $this->postModel->find($id);
+
     $messageModel = new Message();
     $messages = $messageModel->findBy('post_id', $id)->all();
 
@@ -35,15 +36,12 @@ class PostsController extends BaseController {
 
   public function create() {
     $data = $_POST['post'];
-    $userModel = new User();
-    $user_id = Auth::user()['id'];
-    $user = $userModel->find($user_id);
 
-    if ( empty($user)) return Redirect::to($this->indexUrl);
+    if (!Auth::check()) return Redirect::to($this->indexUrl);
 
     $id = $this->postModel->save([
       ...$data,
-      'user_id' => $user_id
+      'user_id' => Auth::user()->id
     ]);
 
     if ($id > 0) {
@@ -71,7 +69,7 @@ class PostsController extends BaseController {
 
     $data = $_POST['post'];
 
-    $user_id = Auth::user()['id'];
+    $user_id = Auth::user()->id;
 
     $newData = [
       ...$data,

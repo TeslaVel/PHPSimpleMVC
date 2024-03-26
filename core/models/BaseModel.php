@@ -1,14 +1,21 @@
 <?php
+require_once "HasMany.php";
+require_once "HasOne.php";
+require_once "BelongsTo.php";
 require_once "concerns/FieldsConcern.php";
 require_once "concerns/Collection.php";
 require_once "concerns/Errors.php";
 require_once "core/validators/Validator.php";
+
 
 class BaseModel {
   use FieldsConcern;
   use Collection;
   use Errors;
   use Validator;
+  use BelongsTo;
+  use HasMany;
+  use HasOne;
 
   private $fillables;
   private $tableName;
@@ -156,15 +163,6 @@ class BaseModel {
   }
 
   public function count() {
-    $tableName = $this->tableName;
-    $sql = "SELECT COUNT(*) FROM $tableName";
-    $stmt = $this->db->prepare($sql);
-    try {
-      $stmt->execute();
-      return $stmt->fetchColumn();
-    } catch(PDOException $e) {
-      echo "Error de conexión: " . $e;
-      exit;
-    }
+    return $this->countCollection();
   }
 }

@@ -9,7 +9,7 @@ ob_start();
       <ul class="list-unstyled">
         <li><strong>Message:</strong> <?php echo $message->message; ?></li>
         <li><strong>User:</strong> <?php echo $message->user_id; ?></li>
-        <li><strong>Post:</strong> <?php echo $message->post_id; ?></li>
+        <li><strong>Post:</strong> <?php echo $message->post()->title; ?></li>
       </ul>
     </p>
     <div class="d-flex justify-content-center mt-5">

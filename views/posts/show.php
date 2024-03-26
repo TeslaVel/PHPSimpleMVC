@@ -9,12 +9,12 @@ ob_start();
       <ul class="list-unstyled">
         <li><strong>Title:</strong> <?php echo $post->title; ?></li>
         <li><strong>Body:</strong> <?php echo $post->body; ?></li>
-        <li><strong>User:</strong> <?php echo $post->user_id; ?></li>
+        <li><strong>User:</strong> <?php print_r($post->user()->email); ?></li>
+        <li><strong>Comments:</strong> <?php echo $post->messages()->count(); ?></li>
       </ul>
     </p>
     <div class="d-flex justify-content-end mt-2">
       <a href="/<?php echo  URL::getAppPath(); ?>/posts/edit/<?php echo $post->id; ?>" class="btn btn-success mx-1">Edit</a>
-      <a href="/<?php echo  URL::getAppPath(); ?>/posts" class="btn btn-danger mx-1">Back</a>
     </div>
   </div>
   <hr>
@@ -29,7 +29,7 @@ ob_start();
     <div class="text-center">
       <button type="submit" class="btn btn-primary">Create Message</button>
       <a class="btn btn-danger"
-        href="/<?php echo URL::getAppPath(); ?>/messages">
+        href="/<?php echo URL::getAppPath(); ?>/posts">
         Back
       </a>
     </div>

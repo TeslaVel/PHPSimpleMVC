@@ -16,6 +16,8 @@ ob_start();
       <th>Email</th>
       <th>First Name</th>
       <th>Last Name</th>
+      <th>Posts</th>
+      <th>Messages</th>
       <th class="text-center">Actions</th>
    </thead>
     <tbody>
@@ -24,12 +26,11 @@ ob_start();
           echo '<td>' . $user->email . '</td>';
           echo '<td>' . $user->first_name . '</td>';
           echo '<td>' . $user->last_name . '</td>';
-          // Add a new column for actions
+          echo '<td>' . $user->posts()->count(). '</td>';
+          echo '<td>' . $user->messages()->count(). '</td>';
           echo '<td class="text-center">';
-            // Edit link (unchanged)
             echo '<a class="btn btn-sm btn-primary mx-1" href="/' . URL::getAppPath() . '/users/' . $user->id . '">View</a>';
             echo '<a class="btn btn-sm btn-warning mx-1" href="/' . URL::getAppPath() . '/users/edit/' . $user->id . '">Edit</a>';
-            // Delete link with POST form and confirmation
             echo '<form style="display:inline-block;" method="POST" action="/' . URL::getAppPath() . '/users/delete/'. $user->id . ' ">';
             echo '<input type="hidden" name="action" value="delete">';
             echo '<input type="hidden" name="user_id" value="' . $user->id . '">';
