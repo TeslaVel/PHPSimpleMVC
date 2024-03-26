@@ -78,9 +78,16 @@ class PostsController extends BaseController {
       'user_id' => $user_id
     ];
 
-    $affected = $post->update($newData);
+    $post->update($newData);
 
-    if ($affected > 0) {
+    if ($post->fails()) {
+      Flashify::create([
+        'type' => 'danger',
+        'message' => implode(',', $post->getErrorMessages()) ,
+      ]);
+    }
+
+    if (!$post->fails()) {
       Flashify::create([
         'type' => 'success',
         'message' => 'Post was updated',

@@ -1,10 +1,14 @@
 <?php
 require_once "concerns/FieldsConcern.php";
 require_once "concerns/Collection.php";
+require_once "concerns/Errors.php";
+require_once "validators/Validator.php";
 
 class BaseModel {
   use FieldsConcern;
   use Collection;
+  use Errors;
+  use Validator;
 
   private $fillables;
   private $tableName;
@@ -24,7 +28,21 @@ class BaseModel {
     return null;
   }
 
+  private function execValidations($data) {
+    $validations = get_class($this)::$validations;
+
+    if (isset($validations)) {
+      $this->addErrors($this->validate($data, $validations));
+    }
+  }
+
+  public function fails() {
+    return count($this->errors) > 0;
+  }
+
   public function save($data) {
+    $this->execValidations($data);
+
     $tableName = $this->tableName;
 
     list($columns, $values, $filteredData) = $this->bindToInsert($this->fillables, $data);
@@ -65,7 +83,7 @@ class BaseModel {
   }
 
   public function update($data) {
-
+    $this->execValidations($data);
     $tableName = $this->tableName;
     list($preparedFields, $filteredData) = $this->bindToUpdate($this->fillables, $data);;
 
@@ -148,9 +166,5 @@ class BaseModel {
       echo "Error de conexión: " . $e;
       exit;
     }
-  }
-
-  public function validate($data) {
-    // Implementar validación de datos
   }
 }

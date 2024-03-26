@@ -1,8 +1,7 @@
 <?php
 
-Router::group(array('before'=>'Test'),function(){
-  Router::get('/', 'HomeController@index');
-});
+Router::get('/', 'HomeController@index');
+
 Router::group(array('before'=>'Auth'),function(){
   Router::get('/users', 'UsersController@index');
   Router::get('/users/{id}', 'UsersController@show');
@@ -18,6 +17,7 @@ Router::group(array('before'=>'Auth'),function(){
   Router::post('/messages/update/{id}', 'MessagesController@update');
 
   Router::get('/posts', 'PostsController@index');
+  Router::get('/posts/new', 'PostsController@new');
   Router::post('/posts/create', 'PostsController@create');
   Router::get('/posts/{id}', 'PostsController@show');
   Router::get('/posts/edit/{id}', 'PostsController@edit');
@@ -30,4 +30,4 @@ Router::get('/session/signin', 'SessionController@signin');
 Router::post('/session/create', 'SessionController@create');
 Router::get('/session/signup', 'SessionController@signup');
 Router::post('/session/register', 'SessionController@register');
-Router::post('/session/destroy', 'SessionController@destroy');
+Router::get('/session/destroy', 'SessionController@destroy');

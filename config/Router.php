@@ -69,15 +69,15 @@ class Router {
       }
 
       $controllerPath = "controllers/$controllerName.php";
-        include_once $controllerPath;
+      include_once $controllerPath;
 
-        $logger = new ActionLogger();
-        $controller = new $controllerName($logger);
-        if (isset($params) && count($params) > 1) {
-          $controller->$method(...array_values($params));
-        } else {
-          $controller->$method();
-        }
+      $logger = new ActionLogger();
+      $controller = new $controllerName($logger);
+      if (isset($params) && count($params) > 1) {
+        $controller->$method(...array_values($params));
+      } else {
+        $controller->$method();
+      }
     } else {
       echo "Invalid action";
     }
