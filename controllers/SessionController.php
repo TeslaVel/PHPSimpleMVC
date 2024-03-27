@@ -1,6 +1,4 @@
 <?php
-require_once 'core/controllers/BaseController.php';
-
 class SessionController extends BaseController {
   private $userModel;
   public $indexUrl;
@@ -25,7 +23,9 @@ class SessionController extends BaseController {
   }
 
   public function create() {
-    $data = $_POST['session'];
+    if (!isset($this->request->session)) return Redirect::to($this->indexUrl);
+
+    $data = $this->request->session;
 
     $user = $this->userModel->findBy('email', $data['email'])->first();
     $exception = null;
@@ -55,7 +55,9 @@ class SessionController extends BaseController {
     Render::view('session/signup', []);
   }
   public function register() {
-    $data = $_POST['session'];
+    if (!isset($this->request->session)) return Redirect::to($this->indexUrl);
+
+    $data = $this->request->session;
 
     $exception = null;
 

@@ -1,5 +1,4 @@
 <?php
-require_once 'core/controllers/BaseController.php';
 
 class MessagesController extends BaseController {
   public $indexUrl;
@@ -29,23 +28,29 @@ class MessagesController extends BaseController {
   }
 
   public function create() {
-    $data = $_POST['message'];
+    if (!isset($this->request->message)) return Redirect::to($this->indexUrl);
 
-    if (!Auth::check()) return Redirect::to($this->indexUrl);
-
-    $id = $this->messageModel->save([
+    $data = $this->request->message;
+    $message = $this->messageModel->save([
       ...$data,
       'user_id' => Auth::user()->id
     ]);
 
-    if ($id > 0) {
+    if ($message->fails()) {
+      Flashify::create([
+        'type' => 'danger',
+        'message' => implode(',', $message->getErrorMessages()) ,
+      ]);
+    }
+
+    if (!$message->fails()) {
       Flashify::create([
         'type' => 'success',
         'message' => 'Message was create',
       ]);
     }
 
-    Redirect::to($this->indexUrl.'/'.$data['post_id']);
+    Redirect::to($this->indexUrl.'/'.$message->post_id);
   }
 
   public function edit($id) {
@@ -59,22 +64,29 @@ class MessagesController extends BaseController {
   }
 
   public function update($id) {
+    if (!isset($this->request->message)) return Redirect::to($this->indexUrl);
+
     $message = $this->messageModel->find($id);
 
     if (empty($message)) return Redirect::to($this->indexUrl);
 
-    $data = $_POST['message'];
+    $data =$this->request->message;
 
-    $affected = $message->update($data);
+    $message->update($data);
 
-    if ($affected > 0) {
+    if ($message->fails()) {
+      Flashify::create([
+        'type' => 'danger',
+        'message' => implode(',', $message->getErrorMessages()) ,
+      ]);
+    } else {
       Flashify::create([
         'type' => 'success',
         'message' => 'Message was updated',
       ]);
     }
 
-    return Redirect::to('/'.URL::getAppPath().'/messages/'.$id);
+    return Redirect::to($this->indexUrl.'/'.$message->post_id);
   }
 
   public function delete($id) {

@@ -1,5 +1,6 @@
 <?php
 
+require_once 'core/controllers/BaseController.php';
 class Router {
   private static $protected_paths = [];
   private static $routes = [];
@@ -29,11 +30,23 @@ class Router {
 
   public static function match($method, $uri) {
     foreach (self::$routes[$method] as $pattern => $handler) {
+
       // $pattern = preg_replace('/\{([^\}]*)\}/', '(?<$1>[^\/]+)', $pattern);
-      $pattern = preg_replace('/\{(\w+)\}/', '(?<$1>\d+)', $pattern);
-      if (preg_match("#^{$pattern}$#", $uri, $matches)) {
-        array_shift($matches);
-        return [$handler, $matches];
+      $npattern = preg_replace('/\{(\w+)\}/', '(?<$1>\d+)', $pattern);
+      if (preg_match("#^{$npattern}$#", $uri, $matches)) {
+
+        $segments = explode('/', $pattern);
+
+        $params = [];
+
+        foreach ($segments as $i => $segment) {
+          if (preg_match('/^\{(\w+)\}$/', $segment, $mtchs)) {
+            $param_name = $mtchs[1];  // Extract parameter name
+            $params[$param_name] = $matches[$param_name];  // Initialize parameter with null value
+          }
+        }
+  
+        return [$handler, $params];
       }
     }
 
@@ -41,6 +54,7 @@ class Router {
   }
 
   public static function dispatch($method, $uri) {
+    // $request = new Request;
     $route = self::match($method, $uri);
     if ($route) {
       $handler = $route[0];
@@ -59,12 +73,11 @@ class Router {
   private static function callHandler($handler, $params) {
     if (is_callable($handler)) {
       call_user_func($handler, $params);
-
     } elseif (is_string($handler)) {
       list($controllerName, $method) = explode('@', $handler);
 
       if (!self::checkIfExistsController($controllerName)) {
-        echo "<br>Controller $controllerName: not found";
+        echo "<br>The Controller $controllerName: not found";
         exit;
       }
 
@@ -73,8 +86,9 @@ class Router {
 
       $logger = new ActionLogger();
       $controller = new $controllerName($logger);
-      if (isset($params) && count($params) > 1) {
-        $controller->$method(...array_values($params));
+      $controller->requestInit();
+      if (isset($params) && count($params) > 0) {
+        $controller->$method(...$params);
       } else {
         $controller->$method();
       }

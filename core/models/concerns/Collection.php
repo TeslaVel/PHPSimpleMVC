@@ -1,4 +1,5 @@
 <?php
+
 trait Collection {
 
   protected $collection = [];

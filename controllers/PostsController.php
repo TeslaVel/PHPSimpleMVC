@@ -1,5 +1,4 @@
 <?php
-require_once 'core/controllers/BaseController.php';
 
 class PostsController extends BaseController {
   public $indexUrl;
@@ -35,12 +34,10 @@ class PostsController extends BaseController {
   }
 
   public function create() {
-    $data = $_POST['post'];
-
-    if (!Auth::check()) return Redirect::to($this->indexUrl);
+    if (!isset($this->request->post)) return Redirect::to($this->indexUrl);
 
     $id = $this->postModel->save([
-      ...$data,
+      ...$this->request->post,
       'user_id' => Auth::user()->id
     ]);
 
@@ -63,16 +60,16 @@ class PostsController extends BaseController {
   }
 
   public function update($id) {
+    if (!isset($this->request->post)) return Redirect::to($this->indexUrl);
+
     $post = $this->postModel->find($id);
 
-    if (empty($post)) return Redirect::to($this->indexUrl);
-
-    $data = $_POST['post'];
+    if (!isset($post)) return Redirect::to($this->indexUrl);
 
     $user_id = Auth::user()->id;
 
     $newData = [
-      ...$data,
+      ...$this->request->post,
       'user_id' => $user_id
     ];
 
@@ -83,9 +80,7 @@ class PostsController extends BaseController {
         'type' => 'danger',
         'message' => implode(',', $post->getErrorMessages()) ,
       ]);
-    }
-
-    if (!$post->fails()) {
+    } else {
       Flashify::create([
         'type' => 'success',
         'message' => 'Post was updated',

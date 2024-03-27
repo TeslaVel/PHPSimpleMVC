@@ -1,12 +1,9 @@
 <?php
-require_once "HasMany.php";
-require_once "HasOne.php";
-require_once "BelongsTo.php";
-require_once "concerns/FieldsConcern.php";
-require_once "concerns/Collection.php";
-require_once "concerns/Errors.php";
-require_once "core/validators/Validator.php";
 
+require_once "concerns/ini.php";
+require_once "relation/ini.php";
+require_once "validators/ini.php";
+require_once "models/autoload.php";
 
 class BaseModel {
   use FieldsConcern;
@@ -25,6 +22,7 @@ class BaseModel {
   public function __construct() {
     $this->tableName = strtolower(get_class($this)::$name);
     $this->fillables = get_class($this)::$fillableFields;
+
     $this->db = Connection::getInstance();
   }
 
@@ -48,12 +46,9 @@ class BaseModel {
   }
 
   public function save($data) {
-    $this->execValidations($data);
-
     $tableName = $this->tableName;
-
     list($columns, $values, $filteredData) = $this->bindToInsert($this->fillables, $data);
-
+    $this->execValidations($filteredData);
     $sql = "INSERT INTO $tableName ($columns) VALUES ($values)";
 
     $stmt = $this->db->prepare($sql);
@@ -65,7 +60,7 @@ class BaseModel {
     try {
       $stmt->execute();
       $id = $this->db->lastInsertId();
-      $this->object = $this->find($id);
+      $this->find($id);
       return $this;
     } catch(PDOException $e) {
       echo "Error de conexión: " . $e;
@@ -90,9 +85,9 @@ class BaseModel {
   }
 
   public function update($data) {
-    $this->execValidations($data);
     $tableName = $this->tableName;
     list($preparedFields, $filteredData) = $this->bindToUpdate($this->fillables, $data);;
+    $this->execValidations($filteredData);
 
     $sql = "UPDATE $tableName SET " . implode(', ', $preparedFields) . " WHERE id = :id";
 
@@ -105,8 +100,8 @@ class BaseModel {
 
     try {
       $stmt->execute();
-      $this->object = $this->find($this->id);
-      return $stmt->rowCount();
+      $this->find($this->id);
+      return $this;
     } catch(PDOException $e) {
       echo "Error de conexión: " . $e;
       exit;
@@ -131,6 +126,7 @@ class BaseModel {
   public function findAll() {
     $tableName = $this->tableName;
     $sql = "SELECT * FROM $tableName";
+
     $stmt = $this->db->prepare($sql);
     try {
       $stmt->execute();

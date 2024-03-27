@@ -1,4 +1,5 @@
 <?php
+
 class Flashify {
   public static function create($params) {
     session_start();

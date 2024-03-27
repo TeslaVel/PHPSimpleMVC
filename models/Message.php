@@ -1,5 +1,4 @@
 <?php
-require_once "core/models/BaseModel.php";
 
 class Message extends BaseModel {
 

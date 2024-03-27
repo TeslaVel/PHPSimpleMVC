@@ -11,7 +11,9 @@ require_once 'helpers/Flashify.php';
 require_once 'helpers/Auth.php';
 require_once 'helpers/Redirect.php';
 require_once 'helpers/Renderize.php';
+require_once 'helpers/Request.php';
 require_once 'config/Router.php';
 require_once 'config/Filters.php';
 require_once 'config/Routes.php';
 require_once 'config/Handler.php';
+

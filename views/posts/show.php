@@ -9,7 +9,7 @@ ob_start();
       <ul class="list-unstyled">
         <li><strong>Title:</strong> <?php echo $post->title; ?></li>
         <li><strong>Body:</strong> <?php echo $post->body; ?></li>
-        <li><strong>User:</strong> <?php print_r($post->user()->email); ?></li>
+        <li><strong>User:</strong> <?php echo $post->user()->email; ?></li>
         <li><strong>Comments:</strong> <?php echo $post->messages()->count(); ?></li>
       </ul>
     </p>

@@ -1,7 +1,5 @@
 <?php
 
-require_once 'autoload.php';
-
 trait Validator {
   public function validate($data, $rules) {
     $errors = [];
@@ -10,12 +8,16 @@ trait Validator {
       $ruleSet = explode('|', $rule);
       $isString = in_array('string', $ruleSet);
 
-      foreach ($ruleSet as $ruleItem) {
+      if (!in_array($field, array_keys($data))) {
+        continue;
+      }
 
+      foreach ($ruleSet as $ruleItem) {
         // Divide la regla en partes y obtiene el nombre de la regla y el valor opcional
         $ruleParts = explode(':', $ruleItem);
         $ruleName = $ruleParts[0];
         $ruleValue = isset($ruleParts[1]) ? $ruleParts[1] : null;
+
         // Verifica si existe una clase para la regla de validación
         if (class_exists(ucfirst($ruleName) . 'Rule')) {
           // Ejecuta la regla de validación

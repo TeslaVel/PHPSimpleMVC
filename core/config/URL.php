@@ -7,7 +7,7 @@ class URL {
   }
 
   public static function getAppPath() {
-    return 'PHPSimpleMVC';
+    return Config::$APPNAME;
   }
 
   public static function getCurrentPath() {

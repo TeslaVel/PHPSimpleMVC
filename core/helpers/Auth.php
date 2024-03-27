@@ -1,5 +1,6 @@
 <?php
-require_once './models/User.php';
+
+require_once 'models/User.php';
 class Auth {
   public static $user;
 

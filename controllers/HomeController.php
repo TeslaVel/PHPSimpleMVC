@@ -1,5 +1,4 @@
 <?php
-require_once 'core/controllers/BaseController.php';
 
 class HomeController extends BaseController {
   private $logger;

@@ -4,11 +4,10 @@
 
 - `config/`
     * `ActionLogger.php`
-    * `URL.php`
-    * `Handler.php`
-    * `Logger.php`
+    * `Config.php`
+    * `Database.php`
+    * `Filters.php`
     * `Routes.php`
-    * `Router.php`
 - `controllers/`
     * `BaseController.php`
     * `HomeController.php`
@@ -17,22 +16,39 @@
     * `SessionsController.php`
     * `UsersController.php`
 - `core/`
+    - `config/`
+        * `ini.php`
+        * `Handler.php`
+        * `Logger.php`
+        * `Router.php`
+        * `URL.php`
+    - `controllers/`
+        * `BaseController.php`
+    - `db/`
+        * `Connection.php`
+    - `helpers/`
+        * `Auth.php`
+        * `Cookie.php`
+        * `Flashify.php`
+        * `Redirect.php`
+        * `Renderize.php`
+    - `models/`
+        - `concerns/`
+            * `FieldsConcern.php`
+            * `Collection.php`
+        - `relation/`
+            * `BelongsTo.php`
+            * `HasMany.php`
+            * `HasOne.php`
+            * `int.php`
+        - `validators`
+            * `EmailRule.php`
+            * `Validator.php`
+            * `RequiredRule.php`
+            * `ini.php`
+        * `BaseModel.php`
     * `ini.php`
-- `db/`
-    * `Connection.php`
-- `helpers/`
-    * `Auth.php`
-    * `Cookie.php`
-    * `Flashify.php`
-    * `Redirect.php`
-    * `Renderize.php`
-- `middlewares/`
-    * `Filters.php`
-- `models/`
-    * `concerns/`
-        * `FieldsConcern.php`
-        * `Collection.php`
-    * `BaseModel.php`
+- `models`
     * `Message.php`
     * `Post.php`
     * `User.php`

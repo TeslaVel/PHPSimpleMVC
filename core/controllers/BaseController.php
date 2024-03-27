@@ -1,6 +1,10 @@
 <?php
-require_once 'models/autoload.php';
+
+require_once 'core/models/BaseModel.php';
 
 class BaseController {
-  public function __construct() {}
+
+  use Request;
+  public function __construct() {
+  }
 }

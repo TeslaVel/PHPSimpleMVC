@@ -1,5 +1,6 @@
 <?php
 require_once "core/models/BaseModel.php";
+
 class User extends BaseModel {
 
   public static $name = 'users';

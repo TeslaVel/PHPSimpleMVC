@@ -1,8 +1,6 @@
 <?php
-require_once 'core/controllers/BaseController.php';
 
 class UsersController extends BaseController {
-  use Redirect;
 
   private $userModel;
   public $indexUrl;
@@ -37,10 +35,11 @@ class UsersController extends BaseController {
 
   # POST users/update/:id
   public function update($id) {
-    $user = $this->userModel->find($id);
-    $data = $_POST['user'];
+    if (!isset($this->request->user)) return Redirect::to($this->indexUrl);
 
-    $affected = $user->update($data);
+    $user = $this->userModel->find($id);
+
+    $affected = $user->update($this->request->user);
 
     if ($affected > 0) {
       Flashify::create([
