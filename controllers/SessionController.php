@@ -44,7 +44,7 @@ class SessionController extends BaseController {
         'message' => $exception,
       ]);
 
-      return  Redirect::to($this->indexUrl);
+      return Redirect::to($this->indexUrl);
     }
 
     Auth::store($user);
@@ -82,7 +82,7 @@ class SessionController extends BaseController {
 
     $newData = [
       ...$_POST['session'],
-      'password' =>  $encrypted
+      'password' => $encrypted
     ];
 
     $id = $this->userModel->save($newData);
