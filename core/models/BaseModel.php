@@ -161,4 +161,11 @@ class BaseModel {
   public function count() {
     return $this->countCollection();
   }
+  public function first() {
+    return $this->firstCollection();
+  }
+
+  public function last() {
+    return $this->lastCollection();
+  }
 }

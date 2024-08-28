@@ -5,9 +5,8 @@ $fields_show = [
     ['name' => 'title'],
     ['name' => 'email', 'callable' => 'user' ],
     ['name' => 'body'],
-    ['name' => 'comments', 'callable' => 'messages->count']
+    ['name' => 'count', 'callable' => 'messages', 'label' => 'Messages']
 ];
-
 
 $table = TableShowComponent::render([
           'path' => 'posts', 'record' => $post,
@@ -18,8 +17,6 @@ $table = TableShowComponent::render([
             'card_footer' => ['classes' => 'd-flex justify-content-end']
           ]
         ]);
-
-
 
 $fields_comment = [
     ['type' => 'hidden', 'name' => 'message[post_id]', 'value' => $post->id],
@@ -40,7 +37,6 @@ $form_comment = FormComponent::render([
             'fields' => $fields_comment, 'custom_url_action' => null,
             'action_buttons' => $action_buttons_comment
             ]);
-
 
 ob_start();
 ?>

@@ -5,8 +5,8 @@ $fields = [
     ['name' => 'email', 'linked' => true],
     ['name' => 'first_name'],
     ['name' => 'last_name'],
-    ['name' => 'messages', 'callable' => 'messages->count'],
-    ['name' => 'posts', 'callable' => 'posts->count']
+    ['name' => 'count', 'callable' => 'messages', 'label' => 'Messages'],
+    ['name' => 'count', 'callable' => 'posts', 'label' => 'Posts']
 ];
 
 $table = TableComponent::render($users, 'users', $fields, [], 'User Lists');

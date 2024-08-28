@@ -24,14 +24,14 @@ trait Collection {
     return $this->collection;
   }
 
-  public function first($number = 1) {
+  public function firstCollection($number = 1) {
     if ($number > 1) {
       return array_slice($this->collection, 0, $number);
     }
     return $this->collection[0];
   }
 
-  public function last($number = 1) {
+  public function lastCollection($number = 1) {
     if ($number > 1) {
       return array_slice($this->collection, -1 * $number, $number);
     }

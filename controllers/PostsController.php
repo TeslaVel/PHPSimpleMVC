@@ -11,15 +11,13 @@ class PostsController extends BaseController {
   }
 
   public function index() {
-    $posts = $this->postModel->findAll()->all();
+    $posts = $this->postModel->findAll();
     Render::view('posts/index', compact('posts'));
   }
 
   public function show($id) {
     $post = $this->postModel->find($id);
-
-    $messageModel = new Message();
-    $messages = $messageModel->findBy('post_id', $id)->all();
+    $messages = $post->messages()->all();;
 
     if ( empty($post)) return Redirect::to($this->indexUrl);
 

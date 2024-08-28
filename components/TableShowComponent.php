@@ -107,14 +107,31 @@ class TableShowComponent {
         if (isset($field['callable'])) {
             $methodNames = explode("->", $field['callable']);
             $callable = $methodNames[0];
+            $result = self::$row;
             if (count($methodNames) <= 1) {
-                $html .= '<td>' .self::$row->$callable()->$propertyName. '</td>';
-            } elseif (count($methodNames) > 1) {
-                $result = self::$row;
-                foreach ($methodNames as $methodName) {
-                    $result = $result->$methodName();
+                if (method_exists($result, $callable)) {
+                    $result = $result->$callable();
                 }
-                $html .= '<td>' . $result . '</td>';
+
+                if (method_exists($result, $propertyName)) {
+                    $result = $result->$propertyName();
+                } else {
+                    $result = $result->$propertyName;
+                }
+
+                $html .= '<td>' .$result. '</td>';
+            } elseif (count($methodNames) > 1) {
+                foreach ($methodNames as $methodName) {
+                    if (method_exists($result, $methodName)) {
+                        $result = $result->$methodName();
+                    }
+                }
+                if (method_exists($result, $propertyName)) {
+                    $result = $result->$propertyName();
+                } else {
+                    $result = $result->$propertyName;
+                }
+                $html .= '<td>' . $result. '</td>';
             }
         } else {
             $html .= '<td>' . self::$row->$propertyName . '</td>';

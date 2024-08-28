@@ -6,11 +6,10 @@ $fields = [
     ['name' => 'title', 'linked' => true],
     ['name' => 'email', 'callable' => 'user' ],
     ['name' => 'body'],
-    ['name' => 'messages', 'callable' => 'messages->count']
+    ['name' => 'count', 'callable' => 'messages', 'label' => 'messages'],
 ];
 
-
-$table = TableComponent::render($posts, 'posts', $fields, [], 'Post Lists', []);
+$table = TableComponent::render($posts->all(), 'posts', $fields, [], 'Post Lists', []);
 
 ob_start();
 ?>
