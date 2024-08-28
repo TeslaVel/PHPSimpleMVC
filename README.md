@@ -1,7 +1,17 @@
 # Simple PHP with MVC pattern.
 
-# Folder Structure
+Building a simple MVC in PHP without third-party code. Just pure PHP
 
+# Folder Structure
+- `components`
+   * `CardComponent.php`
+   * `FormComponent.php`
+   * `FormDeleteComponent.php`
+   * `IconsComponent.php`
+   * `InputComponent.php`
+   * `InputsComponent.php`
+   * `TableComponent.php`
+   * `TableShowComponent.php`
 - `config/`
     * `ActionLogger.php`
     * `Config.php`
@@ -40,7 +50,7 @@
             * `BelongsTo.php`
             * `HasMany.php`
             * `HasOne.php`
-            * `int.php`
+            * `ini.php`
         - `validators`
             * `EmailRule.php`
             * `Validator.php`

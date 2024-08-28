@@ -1,4 +1,4 @@
-<footer class="bg-info text-center text-lg-start fixed-bottom">
+<footer class="bg-info text-center text-lg-start" style="bottom: 0; position: absolute; width: 100%;">
   <!-- Grid container -->
   <div class="container p-2">
     <!--Grid row-->

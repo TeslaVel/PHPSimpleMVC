@@ -5,24 +5,33 @@ if ( empty($message)) {
     return;
 }
 
+$fields = [
+  [
+      'type' => 'textarea', 'name' => 'message[message]', 'label' => 'Message',
+      'required' => true,
+      'value' => $message->message,
+      'is_row' => false,
+  ]
+];
+
+$action_buttons = [
+'submit' => ['label' => 'Update'],
+'back' => ['label' => 'Back', 'url' => '/'.URL::getAppPath().'/messages']
+];
+
+$form = FormComponent::render([
+          'path' => 'messages', 'is_new' => false, 'title' => 'Update Message',
+          'record' => $message, 'fields' => $fields, 'custom_url_action' => null,
+          'action_buttons' => $action_buttons
+          ]);
+
+
 ob_start();
 
 ?>
-<div class="col-4 mx-auto pt-3">
-  <form action="/<?php echo URL::getAppPath(); ?>/messages/update/<?php echo $message->id; ?>" method="POST" class="mb-3">
-    <div class="form-group">
-        <label for="message">Message:</label>
-        <textarea name="message[message]" id="message" class="form-control" required><?php echo $message->message; ?></textarea>
-    </div>
 
-    <div class="text-center">
-      <button type="submit" class="btn btn-success">Update Message</button>
-      <a class="btn btn-danger"
-        href="/<?php echo URL::getAppPath(); ?>/messages">
-        Back
-      </a>
-    </div>
-  </form>
+<div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 mx-auto pt-5">
+  <?php echo $form; ?>
 </div>
 
 <?php

@@ -5,29 +5,38 @@ if ( empty($post)) {
     return;
 }
 
+
+$fields = [
+    [
+        'type' => 'text', 'name' => 'post[title]', 'label' => 'Title',
+        'required' => true, 'styles' => 'color: red;',
+        'value' => $post->title,
+        'is_row' => true,
+    ],
+    [
+      'type' => 'textarea', 'name' => 'post[body]', 'label' => 'Body',
+      'required' => true,
+      'value' => $post->body,
+      'is_row' => false
+    ]
+];
+
+$action_buttons = [
+  'submit' => ['label' => 'Update'],
+  'back' => ['label' => 'Back', 'url' => '/'.URL::getAppPath().'/posts']
+];
+
+$form = FormComponent::render([
+            'path' => 'posts', 'is_new' => false, 'title' => 'Update Post',
+            'record' => $post, 'fields' => $fields, 'custom_url_action' => null,
+            'action_buttons' => $action_buttons
+            ]);
+
 ob_start();
 
 ?>
-<div class="col-4 mx-auto pt-3">
-  <form action="/<?php echo URL::getAppPath(); ?>/posts/update/<?php echo $post->id; ?>" method="POST" class="mb-3">
-    <div class="form-group">
-        <label for="title">Title:</label>
-        <input type="text" name="post[title]" id="title" class="form-control" value="<?php echo $post->title; ?>" required>
-    </div>
-
-    <div class="form-group">
-        <label for="post">Bldy:</label>
-        <textarea name="post[body]" id="body" class="form-control" required><?php echo $post->body; ?></textarea>
-    </div>
-
-    <div class="text-center">
-      <button type="submit" class="btn btn-success">Update Post</button>
-      <a class="btn btn-danger"
-        href="/<?php echo URL::getAppPath(); ?>/posts">
-        Back
-      </a>
-    </div>
-  </form>
+<div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 mx-auto pt-5">
+  <?php echo $form; ?>
 </div>
 
 <?php

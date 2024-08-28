@@ -8,9 +8,9 @@ class Post extends BaseModel {
     'body' => 'required|string|min:4',
   ];
 
-  public static $fillableFields = Array(
+  public static $fillableFields = [
     'title', 'body', 'created_at', 'updated_at', 'user_id'
-  );
+  ];
 
   public function messages() {
     return $this->hasMany(Message::class, 'post_id' , 'id');

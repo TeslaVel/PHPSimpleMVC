@@ -1,24 +1,54 @@
 <?php
+
+
+// $card = CardComponent::render([
+//   'header_title' => 'Message Detail',
+//   'card_classes' => 'mt-5',
+//   'card_header_classes' => 'text-center',
+//   'body_text' => '
+//     <ul class="list-unstyled">
+//         <li><strong>Message: </strong>'.$message->message.'</li>
+//         <li><strong>User: </strong>'.$message->user()->email.'</li>
+//         <li><strong>Post :</strong>'.$message->post()->title.'</li>
+//     </ul>
+//   ',
+//   'card_footer_classes' => 'px-3 py-2 d-flex justify-content-end align-items-center mt-2',
+//   'action_buttons' => [
+//     'edit' => [
+//       'path' => "messages/edit/$message->id",
+//       'with_icon' => true,
+//       'type' => 'button',
+//     ],
+//     'back' => [
+//       'path' => "messages",
+//       'with_icon' => true,
+//       'type' => 'button',
+//     ]
+//   ]
+// ]);
+
+$fields_show = [
+  ['name' => 'id',],
+  ['name' => 'message'],
+  ['name' => 'email', 'callable' => 'user' ],
+  ['name' => 'title', 'callable' => 'post' ],
+];
+
+$table = TableShowComponent::render([
+  'path' => 'messages', 'record' => $message,
+  'fields' => $fields_show,
+  'table_classes' => ['classes' => "table-borderless"],
+  'card_classes' => [
+    'classes' => '',
+    'card_footer' => ['classes' => 'd-flex justify-content-end']
+  ]
+]);
+
 ob_start();
 ?>
-<div class="card col-5 mx-auto mt-5" style="">
-  <div class="card-body p-3">
-    <h5 class="card-title text-center">Message Detail</h5>
-    <h6 class="card-subtitle mb-2 text-muted"></h6>
-    <p class="card-text">
-      <ul class="list-unstyled">
-        <li><strong>Message:</strong> <?php echo $message->message; ?></li>
-        <li><strong>User:</strong> <?php echo $message->user_id; ?></li>
-        <li><strong>Post:</strong> <?php echo $message->post()->title; ?></li>
-      </ul>
-    </p>
-    <div class="d-flex justify-content-center mt-5">
-      <a href="/<?php echo  URL::getAppPath(); ?>/messages/edit/<?php echo $message->id; ?>" class="btn btn-success mx-2">Edit</a>
-      <a href="/<?php echo  URL::getAppPath(); ?>/messages" class="btn btn-danger mx-2">Back</a>
-    </div>
-  </div>
+<div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 mt-5 mx-auto">
+  <?php echo $table; ?>
 </div>
-
 <?php
 $content = ob_get_clean();
 ?>

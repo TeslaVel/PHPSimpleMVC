@@ -45,7 +45,7 @@ class Router {
             $params[$param_name] = $matches[$param_name];  // Initialize parameter with null value
           }
         }
-  
+
         return [$handler, $params];
       }
     }

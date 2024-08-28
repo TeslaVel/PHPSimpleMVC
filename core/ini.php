@@ -15,5 +15,5 @@ require_once 'helpers/Request.php';
 require_once 'config/Router.php';
 require_once 'config/Filters.php';
 require_once 'config/Routes.php';
-require_once 'config/Handler.php';
-
+require_once "components/ini.php";
+require_once 'config/Handler.php'; // debe ir de ultimo

@@ -1,26 +1,36 @@
 <?php
+
+$fields = [
+  [
+      'type' => 'text', 'name' => 'user[first_name]', 'label' => 'First Name',
+      'required' => true, 'styles' => 'color: red;',
+      'value' => $user->first_name,
+      'is_row' => true,
+  ],
+  [
+    'type' => 'textarea', 'name' => 'user[last_name]', 'label' => 'Last Name',
+    'required' => true,
+    'value' => $user->last_name,
+    'is_row' => true
+  ]
+];
+
+$action_buttons = [
+'submit' => ['label' => 'Update'],
+'back' => ['label' => 'Back', 'url' => '/'.URL::getAppPath().'/users']
+];
+
+$form = FormComponent::render([
+          'path' => 'users', 'is_new' => false, 'title' => 'Update User',
+          'record' => $user, 'fields' => $fields, 'custom_url_action' => null,
+          'action_buttons' => $action_buttons
+          ]);
+
 ob_start();
 ?>
 
-<div class="col-4 mx-auto pt-3">
-  <form action="/<?php echo URL::getAppPath(); ?>/users/update/<?php echo $user->id; ?>" method="POST" class="mb-3">
-    <input type="hidden" name="user_id" value="<?php echo $user->id; ?>">
-    <div class="form-group">
-        <label for="first_name">First Name:</label>
-        <input type="text" name="user[first_name]" id="first_name" class="form-control" value="<?php echo $user->first_name; ?>" required>
-    </div>
-    <div class="form-group">
-        <label for="last_name">Last Name:</label>
-        <input type="text" name="user[last_name]" id="last_name" class="form-control" value="<?php echo $user->last_name; ?>" required>
-    </div>
-    <div class="text-center">
-      <button type="submit" class="btn btn-success">Update User</button>
-      <a class="btn btn-danger"
-        href="/<?php echo URL::getAppPath(); ?>/users">
-        Back
-      </a>
-    </div>
-  </form>
+<div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 mx-auto pt-5">
+  <?php echo $form; ?>
 </div>
 
 <?php

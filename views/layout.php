@@ -13,10 +13,8 @@
   <?php  require_once "notifications.php"; ?>
   <?php  require_once "menu.php"; ?>
 
-  <main class="container-fluid">
-    <div class="my-2">
+  <main class="" style="overflow: scroll; height: 70vh;">
       <?php echo $content ? $content : ''; ?>
-    </div>
   </main>
 
   <?php  require_once "footer.php"; ?>

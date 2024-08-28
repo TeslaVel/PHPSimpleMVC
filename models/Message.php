@@ -9,9 +9,9 @@ class Message extends BaseModel {
     'post_id' => 'required',
   ];
 
-  public static $fillableFields = Array(
+  public static $fillableFields = [
     'message', 'created_at', 'updated_at', 'user_id', 'post_id'
-  );
+  ];
 
   public function post() {
     return $this->belongsTo(Post::class, 'post_id');
