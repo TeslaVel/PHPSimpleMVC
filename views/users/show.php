@@ -4,6 +4,8 @@ $fields_show = [
   ['name' => 'email'],
   ['name' => 'first_name'],
   ['name' => 'last_name'],
+  ['name' => 'count', 'callable' => 'messages', 'label' => 'Messages'],
+  ['name' => 'count', 'callable' => 'posts', 'label' => 'Posts'],
 ];
 
 

@@ -105,34 +105,8 @@ class TableShowComponent {
         $propertyName = $field['name'];
 
         if (isset($field['callable'])) {
-            $methodNames = explode("->", $field['callable']);
-            $callable = $methodNames[0];
-            $result = self::$row;
-            if (count($methodNames) <= 1) {
-                if (method_exists($result, $callable)) {
-                    $result = $result->$callable();
-                }
-
-                if (method_exists($result, $propertyName)) {
-                    $result = $result->$propertyName();
-                } else {
-                    $result = $result->$propertyName;
-                }
-
-                $html .= '<td>' .$result. '</td>';
-            } elseif (count($methodNames) > 1) {
-                foreach ($methodNames as $methodName) {
-                    if (method_exists($result, $methodName)) {
-                        $result = $result->$methodName();
-                    }
-                }
-                if (method_exists($result, $propertyName)) {
-                    $result = $result->$propertyName();
-                } else {
-                    $result = $result->$propertyName;
-                }
-                $html .= '<td>' . $result. '</td>';
-            }
+            $result = HelperComponent::method_or_field(self::$row, $field['callable'], $field['name']);
+            $html .= '<td>' .$result. '</td>';
         } else {
             $html .= '<td>' . self::$row->$propertyName . '</td>';
         }
