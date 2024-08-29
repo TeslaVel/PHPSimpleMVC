@@ -102,8 +102,8 @@ class SessionController extends BaseController {
     Redirect::to($this->indexUrl);
   }
 
-  public function destroy() {
-    Auth::destroy();
+  public function delete() {
+    Auth::delete();
     Redirect::to($this->indexUrl);
   }
 }

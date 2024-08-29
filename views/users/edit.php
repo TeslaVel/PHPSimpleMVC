@@ -22,7 +22,7 @@ $action_buttons = [
 
 $form = FormComponent::render([
           'path' => 'users', 'is_new' => false, 'title' => 'Update User',
-          'record' => $user, 'fields' => $fields, 'custom_url_action' => null,
+          'record' => $user, 'fields' => $fields,
           'action_buttons' => $action_buttons
           ]);
 

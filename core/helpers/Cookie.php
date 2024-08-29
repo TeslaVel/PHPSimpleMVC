@@ -29,7 +29,7 @@ class Cookie {
   public static function check($name) {
     return isset($_COOKIE[$name]);
   }
-  public static function destroy($name) {
+  public static function delete($name) {
     setcookie($name, '', time() - 3600, '/');
     unset($_COOKIE[$name]);
   }

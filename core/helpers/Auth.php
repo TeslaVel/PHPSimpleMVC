@@ -25,8 +25,8 @@ class Auth {
     Cookie::store(Config::$COOKIE_NAME, ['user_id' => $user->id]);
   }
 
-  public static function destroy($params = []) {
-    Cookie::destroy(Config::$COOKIE_NAME);
+  public static function delete($params = []) {
+    Cookie::delete(Config::$COOKIE_NAME);
     self::$user = null;
   }
 }

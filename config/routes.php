@@ -30,4 +30,4 @@ Router::get('/session/signin', 'SessionController@signin');
 Router::post('/session/create', 'SessionController@create');
 Router::get('/session/signup', 'SessionController@signup');
 Router::post('/session/register', 'SessionController@register');
-Router::get('/session/destroy', 'SessionController@destroy');
+Router::get('/session/delete', 'SessionController@delete');

@@ -5,25 +5,27 @@ class FormComponent {
     private static $fields;
     private static $back_button;
     private static $submit_button;
+    private static $generic_button;
     private static $form_title;
     private static $base_url;
 
     public static function render($options) {
-        $is_new = isset($options['is_new']) && $options['is_new'];
+        $is_new = isset($options['is_new']) ? $options['is_new'] : true;
         $path = isset($options['path']) ? $options['path'] : null;
         $record = isset($options['record']) ? $options['record'] : null;
+        $custom_path = isset($options['custom_path']) ? $options['custom_path'] : null;
 
         self::$base_url = "/" . URL::getAppPath() . "/" . $path;
 
-        if (isset($options['custom_url_action'])) {
-            $url = $options['custom_url_action'];
+        if (isset($custom_path)) {
+            $url = self::$base_url . '/' . $custom_path;
         } else {
             $url = self::$base_url . '/create';
         }
 
         $submit_label = 'Create';
 
-        if ($is_new == false && !isset($options['custom_url_action'])) {
+        if ($is_new == false && !isset($custom_path)) {
             $url = self::$base_url . "/update/".$record->id;
             $submit_label = 'Update';
         }
@@ -32,8 +34,12 @@ class FormComponent {
         $action_buttons = isset($options['action_buttons']) ? $options['action_buttons'] : [];
 
         $default_actions = [
-            'submit' => ['label' => $submit_label],
-            'back' => ['label' => 'Back', 'url' => self::$base_url, 'with_icon' => true ],
+            'submit' => ['label' => $submit_label, 'hidden' => false],
+            'generic' => [
+                'label' => 'Generic', 'url' => self::$base_url, 'with_icon' => true, 'hidden' => true,
+                'color' => 'warning'
+            ],
+            'back' => ['label' => 'Back', 'url' => self::$base_url, 'with_icon' => true, 'hidden' => false ],
         ];
 
         self::$target_url = $url;
@@ -47,6 +53,10 @@ class FormComponent {
         self::$submit_button =  isset($action_buttons['submit'])
                               ? array_merge($default_actions['submit'], $action_buttons['submit'])
                               : $default_actions['submit'];
+
+        self::$generic_button =  isset($action_buttons['generic'])
+                              ? array_merge($default_actions['generic'], $action_buttons['generic'])
+                              : $default_actions['generic'];
         return self::form();
     }
 
@@ -65,13 +75,20 @@ class FormComponent {
                 </div>
                 <div class="card-footer d-flex justify-content-center" style="gap: 10px;">';
 
-        if (self::$submit_button) {
+        if (self::$submit_button && !self::$submit_button['hidden']) {
             $html .= '<button type="submit" class="btn btn-primary">'. self::$submit_button['label'].'</button>';
         }
 
-        if (self::$back_button) {
+        if (self::$back_button && !self::$back_button['hidden']) {
             $html .= '<a href="'.self::$back_button['url'].'" class="btn btn-danger">';
             $html .= (self::$back_button['with_icon']) ? IconsComponent::render('leftArrow', '23', '23') : self::$back_button['label'];
+            $html .= '</a>';
+        }
+
+        if (self::$generic_button && !self::$generic_button['hidden']) {
+            $color = self::$generic_button['color'];
+            $html .= '<a href="'.self::$generic_button['url'].'" class="btn btn-'.$color.'">';
+            $html .= (self::$generic_button['with_icon']) ? IconsComponent::render('threeDots', '23', '23') : self::$generic_button['label'];
             $html .= '</a>';
         }
 

@@ -34,7 +34,7 @@ $action_buttons_comment = [
 
 $form_comment = FormComponent::render([
             'path' => 'messages', 'is_new' => true, 'title' => 'Create Comment',
-            'fields' => $fields_comment, 'custom_url_action' => null,
+            'fields' => $fields_comment,
             'action_buttons' => $action_buttons_comment
             ]);
 

@@ -3,13 +3,11 @@
 $fields = [
     [
         'type' => 'text', 'name' => 'post[title]', 'label' => 'Title',
-        'required' => true, 'styles' => 'color: red;',
-        'is_row' => true,
+        'required' => true, 'is_row' => true,
     ],
     [
       'type' => 'textarea', 'name' => 'post[body]', 'label' => 'Body',
-      'required' => true,
-      'is_row' => false
+      'required' => true, 'is_row' => false
     ]
 ];
 

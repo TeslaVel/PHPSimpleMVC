@@ -21,7 +21,7 @@ $action_buttons = [
 
 $form = FormComponent::render([
           'path' => 'messages', 'is_new' => false, 'title' => 'Update Message',
-          'record' => $message, 'fields' => $fields, 'custom_url_action' => null,
+          'record' => $message, 'fields' => $fields,
           'action_buttons' => $action_buttons
           ]);
 

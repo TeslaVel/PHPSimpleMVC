@@ -79,19 +79,26 @@ class InputComponent {
             $props['required'] = self::$attrs['required'];
         }
 
-        if (in_array(self::$attrs['type'], ['text', 'number', 'date']) && isset(self::$attrs['value'])) {
+        if (in_array(self::$attrs['type'], ['email', 'text', 'number', 'date']) && isset(self::$attrs['value'])) {
             $props['value'] = self::$attrs['value'];
         }
 
-        
+        if (in_array(self::$attrs['type'], ['password', 'email', 'text', 'number', 'date']) && isset(self::$attrs['placeholder'])) {
+            $props['placeholder'] = self::$attrs['placeholder'];
+        }
+
         $html = '';
 
         switch (self::$attrs['type']) {
             case 'label':
                 $html = '<label class="col-form-label w-100 pl-3'. (self::$attrs['label_class'] ?? '') . '">' . self::$attrs['value'] . '</label>';
                 break;
+            case 'email':
             case 'text':
-                $html = '<input type="text" name="' . self::$attrs['name'] . '" ' . self::buildProps($props) . '>';
+                $html = '<input type="'. self::$attrs['type'].'" name="' . self::$attrs['name'] . '" ' . self::buildProps($props) . '>';
+                break;
+            case 'password':
+                $html = '<input type="password" name="' . self::$attrs['name'] . '" ' . self::buildProps($props) . '>';
                 break;
            case 'textarea':
                 $html = '<textarea name="' . self::$attrs['name'] . '" ' . self::buildProps($props) . '> '. (isset(self::$attrs['value']) ? self::$attrs['value'] : '').'</textarea>';
