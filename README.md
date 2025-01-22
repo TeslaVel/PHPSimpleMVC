@@ -1,6 +1,6 @@
-# Simple PHP with MVC pattern.
+# I made it myself. Simple PHP with MVC pattern.
 
-Building a simple MVC in PHP without third-party code. Just pure PHP
+Building a simple MVC in PHP without third-party code. Just pure PHP (WIP)
 
 # Folder Structure
 - `components`
